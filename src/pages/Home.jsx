@@ -1,8 +1,9 @@
 import useModal from '../components/custom/useModal';
 import Modal from '../components/Modal';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import supabase from '../components/Supabase';
 import styled from 'styled-components';
+import Preview from '../components/Preview';
 
 const Container = styled.div`
     width: auto;
@@ -71,15 +72,15 @@ const Home = () => {
             <div>
                 <button onClick={toggleModal}>모달 열기</button>
                 {isModalOpen && (
-                    <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
+                    <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="70%" $height="70%">
                         {/* 보여줄 컴포넌트 자리 */}
-                        <div
+                        <Preview
                             style={{
                                 width: '100%',
                                 height: '100%',
                                 background: 'blue'
                             }}
-                        ></div>
+                        ></Preview>
                     </Modal>
                 )}
             </div>
