@@ -31,10 +31,6 @@ export default [
             'react/jsx-no-target-blank': 'off',
             'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
             'react/prop-types': 'off'
-        },
-        env: {
-            browser: true,
-            node: true // Node.js 환경 추가
         }
     }
 ];
