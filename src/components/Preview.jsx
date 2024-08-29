@@ -59,11 +59,12 @@ const ProfileContainer = styled.div`
 `;
 const ProfileImage = styled.img`
     border-radius: 70%;
-    display: inline-block;
+    width: 50px;
+    height: 50px;
+    /* display: inline-block;
     max-width: 100%;
     height: auto;
-    z-index: 500;
-    flex: 1;
+    z-index: 500; */
 `;
 const Content = styled.div`
     flex: 4;
