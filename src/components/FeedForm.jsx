@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import supabase from './Supabase';
 
-const FeedForm = ({ setFeeds, toggleModal }) => {
-  const [formData, setFormData] = useState({
+const FeedForm = ({ toggleModal }) => {
+  let formData = {
+    author_id: '',
+    author_name: '',
+    author_profile_url: '',
     id: '',
-    date: '',
+    date: new Date(),
     title: '',
     content: '',
     img_url: '',
     category_region: '',
     category_tag: ''
-  });
+  };
   console.log(formData);
 
   //   const [authorData, setAuthorData] = useState(null);
@@ -20,12 +23,6 @@ const FeedForm = ({ setFeeds, toggleModal }) => {
   const regions = ['서울', '경기', '인천', '제주도', '전라도', '경상도(+독도)', '충청도', '강원도'];
   const tags = ['카페', '바', '공유오피스', '기타'];
 
-  const handleChange = (e) => {
-    // console.log(e.target.value);
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   async function createPost() {
     const { data } = await supabase.from('feed').insert({
       title: formData.title,
@@ -34,8 +31,6 @@ const FeedForm = ({ setFeeds, toggleModal }) => {
       category_region: formData.category_region,
       category_tag: formData.category_tag
     });
-
-    // setFeeds((prev) => [...prev, ...data]);
   }
 
   const handleSubmit = (e) => {
@@ -62,7 +57,14 @@ const FeedForm = ({ setFeeds, toggleModal }) => {
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="title">제목</label>
-            <input type="text" id="title" name="title" value={formData['title']} onChange={handleChange} />
+            <input
+              type="text"
+              id="title"
+              name="title"
+              onChange={(e) => {
+                formData.title = e.target.value;
+              }}
+            />
           </div>
 
           <div>
@@ -70,8 +72,9 @@ const FeedForm = ({ setFeeds, toggleModal }) => {
             <select
               id="category_region"
               name="category_region"
-              value={formData['category_region']}
-              onChange={handleChange}
+              onChange={(e) => {
+                formData.category_region = e.target.value;
+              }}
             >
               <option value="">지역 선택하기</option>
               {regions.map((region) => {
@@ -86,7 +89,13 @@ const FeedForm = ({ setFeeds, toggleModal }) => {
 
           <div>
             <label htmlFor="category_tag">태그</label>
-            <select id="category_tag" name="category_tag" value={formData['category_tag']} onChange={handleChange}>
+            <select
+              id="category_tag"
+              name="category_tag"
+              onChange={(e) => {
+                formData.category_tag = e.target.value;
+              }}
+            >
               <option value="">장소 선택하기</option>
               {tags.map((tag) => {
                 return (
@@ -100,12 +109,26 @@ const FeedForm = ({ setFeeds, toggleModal }) => {
 
           <div>
             <label htmlFor="content">내용</label>
-            <textarea id="content" name="content" value={formData['content']} onChange={handleChange} />
+            <textarea
+              id="content"
+              name="content"
+              onChange={(e) => {
+                formData.content = e.target.value;
+              }}
+            />
           </div>
 
           <div>
-            <label htmlFor="img_url">사진 추가</label>
-            <input type="text" id="img_url" name="img_url" value={formData['img_url']} onChange={handleChange} />
+            {/* <label htmlFor="img_url">사진 추가</label>
+            <input
+              type="text"
+              id="img_url"
+              name="img_url"
+              onChange={(e) => {
+                formData.img_url = e.target.value;
+              }}
+            /> */}
+            <input type="file" accept="image/*" />
           </div>
 
           <button type="submit">업로드하기</button>
