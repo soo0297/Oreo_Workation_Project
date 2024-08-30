@@ -14,21 +14,36 @@ const useAuth = () => {
   const getSession = async () => {
     try {
       const { data, error } = await supabase.auth.getSession();
-
       error && alert('세션을 불러오는 도중 오류가 발생하였습니다.', error);
       await handleAuthToggle(data.session);
+
+      //   const { _, _error } = supabase.auth.onAuthStateChange((event, session) => {
+      //     console.log('event: ', event);
+      //     console.log('session: ', session);
+      //   });
+      //   _error && alert('인증 상태 리스너에서 오류가 발생하였습니다.', error);
     } catch (err) {
       alert('세션을 불러오는 도중 오류가 발생하였습니다.', err);
     }
-
-    const { _, error } = supabase.auth.onAuthStateChange((_event, session) => {
-      error && alert('인증 상태 리스너에서 오류가 발생하였습니다.', error);
-    });
   };
 
   // 로그인 상태 변경
   const handleAuthToggle = async (session) => {
     session && setSignIn(true);
+  };
+
+  // 계정 등록
+  const handleSignUp = async ({ email, password, nickname }, onSuccess) => {
+    try {
+      const { data } = await supabase.auth.signUp({
+        email: email,
+        password: password
+      });
+
+      data && onSuccess((prev) => !prev);
+    } catch (err) {
+      alert('계정 등록하는데 오류가 발생하였습니다.', err);
+    }
   };
 
   // 로그인
@@ -39,13 +54,14 @@ const useAuth = () => {
         password: password
       });
 
+      await handleAuthToggle(data.session);
+
       if (error) {
         // 로그인 실패 시
         alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
       } else if (data) {
         // 로그인 성공 시
         if (onSuccess && typeof onSuccess === 'function') {
-          console.log(data);
           onSuccess(); // 델리게이트 실행
         }
       }
@@ -65,7 +81,7 @@ const useAuth = () => {
     }
   };
 
-  return { isSignedIn, handleSignIn, handleSignOut };
+  return { isSignedIn, handleSignUp, handleSignIn, handleSignOut };
 };
 
 export default useAuth;

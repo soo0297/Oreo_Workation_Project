@@ -5,8 +5,7 @@ import Login from './Login';
 import useModal from './custom/useModal';
 
 const Navibar = () => {
-  console.log('Navibar');
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, handleSignIn } = useAuth();
   const { isModalOpen, toggleModal } = useModal();
 
   return (
@@ -33,7 +32,7 @@ const Navibar = () => {
       </RightItem_Wrapper>
       {isModalOpen && (
         <Modal toggleModal={toggleModal} $width="25%" $height="40%">
-          <Login toggleModal={toggleModal}></Login>
+          <Login toggleModal={toggleModal} handleSignIn={handleSignIn}></Login>
         </Modal>
       )}
     </NavigationBar>
