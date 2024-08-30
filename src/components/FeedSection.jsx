@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import useModal from './custom/useModal';
-import Modal from './Modal';
 import Preview from './Preview';
 import { useState } from 'react';
+import Modal from './common/Modal';
 
 const FeedSection = ({ feeds }) => {
   const { isModalOpen, toggleModal } = useModal();
@@ -37,10 +37,12 @@ const FeedSection = ({ feeds }) => {
           );
         })}
       </FeedSection_Wrapper>
-      <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="70%" $height="70%">
-        {/* 보여줄 컴포넌트 자리 */}
-        <Preview feed={selectedFeed} />
-      </Modal>
+      {isModalOpen && (
+        <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="70%" $height="70%">
+          {/* 보여줄 컴포넌트 자리 */}
+          <Preview feed={selectedFeed} />
+        </Modal>
+      )}
     </>
   );
 };

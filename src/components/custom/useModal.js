@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+// 모달 커스텀 훅
 const useModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
