@@ -57,7 +57,6 @@ const FeedImage = styled.img`
   display: inline-block;
   max-width: 100%;
   height: auto;
-  z-index: 500;
 `;
 const ContentContainer = styled.div`
   flex: 1;
