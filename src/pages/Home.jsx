@@ -4,40 +4,8 @@ import { useEffect, useState } from 'react';
 import supabase from '../components/Supabase';
 import styled from 'styled-components';
 import Preview from '../components/Preview';
-
-const Container = styled.div`
-    width: auto;
-    height: auto;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 2.5fr 7fr 3fr;
-    width: 1250px;
-    justify-content: center;
-    position: relative;
-    column-gap: 60px;
-    padding: 8px 16px;
-`;
-
-const Category = styled.div`
-    border: 1px black solid;
-`;
-
-const Follower = styled.div`
-    border: 1px black solid;
-`;
-
-const FeedsSection = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-const Feed = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #aaa;
-`;
+import Category from '../components/Category';
+import FeedSection from '../components/FeedSection';
 
 const Btn = styled.button`
     width: 60px;
@@ -86,48 +54,29 @@ const Home = () => {
             </div>
             <Container>
                 <Category>카테고리</Category>
-                <FeedsSection>
-                    {feeds.map((feed) => {
-                        return (
-                            <article key={feed.id}>
-                                <Feed>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <img
-                                            src={feed.author_profile_url}
-                                            style={{
-                                                width: '40px',
-                                                height: '40px',
-                                                borderRadius: '50%'
-                                            }}
-                                        />
-                                        <p>{feed.author_name}</p>
-                                    </div>
-                                    <div onClick={toggleModal}>
-                                        <h3>{feed.title}</h3>
-                                        <div
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '10px'
-                                            }}
-                                        >
-                                            <div>{feed.category_region}</div>
-                                            <div>{feed.category_tag}</div>
-                                        </div>
-
-                                        <p>{feed.content}</p>
-                                        <p>{feed.date}</p>
-                                    </div>
-                                </Feed>
-                            </article>
-                        );
-                    })}
-                </FeedsSection>
+                <FeedSection feeds={feeds} />
                 <Follower>팔로우</Follower>
                 <Btn>작성</Btn>
             </Container>
         </>
     );
 };
+
+const Container = styled.div`
+    width: auto;
+    height: auto;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 2.5fr 7fr 3fr;
+    width: 1250px;
+    justify-content: center;
+    position: relative;
+    column-gap: 60px;
+    padding: 8px 16px;
+`;
+
+const Follower = styled.div`
+    border: 1px black solid;
+`;
 
 export default Home;
