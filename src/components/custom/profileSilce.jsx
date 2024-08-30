@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import supabase from '../components/Supabase';
+import supabase from '../Supabase';
 
 const Container = styled.div`
   padding: 20px;
@@ -42,7 +42,7 @@ const FeedCard = styled.div`
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 8px;
-  width: 300px; // 카드의 너비를 넓게 설정
+  width: 300px;  // 카드의 너비를 넓게 설정
   cursor: pointer;
   transition: box-shadow 0.3s;
 
@@ -77,7 +77,7 @@ const ContentPreview = styled.p`
 const EditDeleteButtons = styled.div`
   display: none;
   position: absolute;
-  bottom: 10px; // 하단으로 이동
+  bottom: 10px;  // 하단으로 이동
   left: 10px;
   gap: 10px;
 
@@ -118,7 +118,7 @@ const TextareaField = styled.textarea`
   margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 4px;
-  resize: none; // 크기 조정 불가능하게 설정
+  resize: none;  // 크기 조정 불가능하게 설정
 `;
 
 const Button = styled.button`
@@ -140,7 +140,7 @@ const Button = styled.button`
 const MyPage = () => {
   const [profile, setProfile] = useState({
     author_name: '',
-    author_profile_url: ''
+    author_profile_url: '',
   });
   const [newName, setNewName] = useState('');
   const [feeds, setFeeds] = useState([]);
@@ -162,7 +162,7 @@ const MyPage = () => {
       } else {
         setProfile({
           author_name: data.author_name,
-          author_profile_url: data.author_profile_url
+          author_profile_url: data.author_profile_url,
         });
       }
     };
@@ -186,14 +186,17 @@ const MyPage = () => {
 
   const handleNameChange = async () => {
     const userId = 1;
-    const { data, error } = await supabase.from('feed').update({ author_name: newName }).eq('id', userId);
+    const { data, error } = await supabase
+      .from('feed')
+      .update({ author_name: newName })
+      .eq('id', userId);
 
     if (error) {
       console.error('Error updating name:', error);
     } else {
-      setProfile((prevProfile) => ({
+      setProfile(prevProfile => ({
         ...prevProfile,
-        author_name: newName
+        author_name: newName,
       }));
       setNewName('');
     }
@@ -214,22 +217,23 @@ const MyPage = () => {
     if (error) {
       console.error('Error updating post:', error);
     } else {
-      setFeeds(
-        feeds.map((feed) =>
-          feed.id === editingPost.id ? { ...feed, title: updatedTitle, content: updatedContent } : feed
-        )
-      );
+      setFeeds(feeds.map(feed =>
+        feed.id === editingPost.id ? { ...feed, title: updatedTitle, content: updatedContent } : feed
+      ));
       setEditingPost(null);
     }
   };
 
   const handlePostDelete = async (postId) => {
-    const { error } = await supabase.from('feed').delete().eq('id', postId);
+    const { error } = await supabase
+      .from('feed')
+      .delete()
+      .eq('id', postId);
 
     if (error) {
       console.error('Error deleting post:', error);
     } else {
-      setFeeds(feeds.filter((feed) => feed.id !== postId));
+      setFeeds(feeds.filter(feed => feed.id !== postId));
     }
   };
 
@@ -237,7 +241,10 @@ const MyPage = () => {
     <Container>
       <h1>마이 페이지</h1>
       <ProfileSection>
-        <ProfileImage src={profile.author_profile_url} alt={profile.author_name} />
+        <ProfileImage
+          src={profile.author_profile_url}
+          alt={profile.author_name}
+        />
         <div>
           <ProfileName>이름: {profile.author_name}</ProfileName>
           {newName === '' ? (
@@ -263,7 +270,10 @@ const MyPage = () => {
           {feeds.map((feed) => (
             <FeedCard key={feed.id}>
               <FeedTitle>{feed.title}</FeedTitle>
-              <FeedImage src={feed.img_url} alt={feed.title} />
+              <FeedImage
+                src={feed.img_url}
+                alt={feed.title}
+              />
               <ContentPreview>{feed.content}</ContentPreview>
               <EditDeleteButtons className="edit-delete-buttons">
                 <Button onClick={() => handlePostEdit(feed)}>수정</Button>

@@ -1,9 +1,11 @@
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
+import Navibar from '../components/Navibar';
 
 const Layout = () => {
   return (
     <div>
-      <Header></Header>
+      <Navibar />
       <main>
         <Outlet />
       </main>
@@ -12,12 +14,6 @@ const Layout = () => {
   );
 };
 
-const Header = () => {
-  return <header></header>;
-};
-
-const Footer = () => {
-  return <footer></footer>;
-};
+const Footer = styled.footer``;
 
 export default Layout;

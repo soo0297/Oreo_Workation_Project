@@ -16,7 +16,7 @@ const Category = () => {
   );
 };
 
-const CategoryArea = styled.button`
+const CategoryArea = styled.div`
   border: 1px black solid;
   align-items: baseline;
 `;

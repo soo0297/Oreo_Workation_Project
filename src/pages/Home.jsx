@@ -1,13 +1,15 @@
+import useModal from '../components/custom/useModal';
 import { useEffect, useState } from 'react';
 import supabase from '../components/Supabase';
 import styled from 'styled-components';
 import Category from '../components/Category';
 import FeedSection from '../components/FeedSection';
-import Modal from '../components/Modal';
-import useModal from '../components/custom/useModal';
+import Modal from '../components/common/Modal';
 import FeedForm from '../components/FeedForm';
 
 const Home = () => {
+  console.log('home');
+
   const [feeds, setFeeds] = useState([]);
   const { isModalOpen, toggleModal } = useModal();
 
@@ -33,10 +35,12 @@ const Home = () => {
         <Follower>팔로우</Follower>
         <Write_Btn onClick={toggleModal}>작성</Write_Btn>
       </Container>
-      <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
-        {/* 보여줄 컴포넌트 자리 */}
-        <FeedForm />
-      </Modal>
+      {isModalOpen && (
+        <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
+          {/* 보여줄 컴포넌트 자리 */}
+          <FeedForm />
+        </Modal>
+      )}
     </>
   );
 };
