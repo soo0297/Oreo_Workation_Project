@@ -5,6 +5,7 @@ import Category from '../components/Category';
 import FeedSection from '../components/FeedSection';
 import Modal from '../components/Modal';
 import useModal from '../components/custom/useModal';
+import FeedForm from '../components/FeedForm';
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);
@@ -34,7 +35,7 @@ const Home = () => {
       </Container>
       <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
         {/* 보여줄 컴포넌트 자리 */}
-        <div>작성폼 컴포넌트</div>
+        <FeedForm />
       </Modal>
     </>
   );
