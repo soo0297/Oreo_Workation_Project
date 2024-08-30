@@ -30,7 +30,6 @@ const FeedSection = ({ feeds }) => {
                   <div>{feed.category_tag}</div>
                 </Category_Wrapper>
                 <img src={feed.img_url} />
-                <p>{feed.content}</p>
                 <p>{feed.date}</p>
               </Content_Container>
             </Feed>
@@ -76,8 +75,9 @@ const Content_Container = styled.div`
 `;
 
 const Category_Wrapper = styled.div`
-  display: 'flex';
-  align-items: 'center';
-  gap: '10px';
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 `;
 export default FeedSection;

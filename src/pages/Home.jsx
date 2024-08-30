@@ -11,6 +11,7 @@ const Home = () => {
   console.log('home');
 
   const [feeds, setFeeds] = useState([]);
+  const [filterFeed, setFilterFeed] = useState([]);
   const { isModalOpen, toggleModal } = useModal();
 
   useEffect(() => {
@@ -21,17 +22,22 @@ const Home = () => {
       } else {
         console.log('data => ', data);
         setFeeds(data);
+        setFilterFeed(data);
       }
     };
 
     fetchData();
   }, []);
 
+  console.log(filterFeed);
+
   return (
     <>
       <Container>
-        <Category>카테고리</Category>
-        <FeedSection feeds={feeds} />
+        <Category feeds={feeds} setFilterFeed={setFilterFeed}>
+          카테고리
+        </Category>
+        <FeedSection feeds={filterFeed} />
         <Follower>팔로우</Follower>
         <Write_Btn onClick={toggleModal}>작성</Write_Btn>
       </Container>
