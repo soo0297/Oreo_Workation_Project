@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Category from '../components/Category';
 import FeedSection from '../components/FeedSection';
 import Modal from '../components/common/Modal';
+import FeedForm from '../components/FeedForm';
 
 const Home = () => {
   console.log('home');
@@ -37,7 +38,7 @@ const Home = () => {
       {isModalOpen && (
         <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
           {/* 보여줄 컴포넌트 자리 */}
-          <div>작성폼 컴포넌트</div>
+          <FeedForm />
         </Modal>
       )}
     </>
