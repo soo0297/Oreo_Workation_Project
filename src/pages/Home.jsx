@@ -1,24 +1,14 @@
-import useModal from '../components/custom/useModal';
-import Modal from '../components/Modal';
 import { useEffect, useState } from 'react';
 import supabase from '../components/Supabase';
 import styled from 'styled-components';
 import Category from '../components/Category';
 import FeedSection from '../components/FeedSection';
-
-const Btn = styled.button`
-  width: 60px;
-  height: 60px;
-  border-radius: 25%;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-`;
+import Modal from '../components/Modal';
+import useModal from '../components/custom/useModal';
 
 const Home = () => {
-  const { isModalOpen, toggleModal } = useModal();
-
   const [feeds, setFeeds] = useState([]);
+  const { isModalOpen, toggleModal } = useModal();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,27 +26,16 @@ const Home = () => {
 
   return (
     <>
-      <div>
-        <button onClick={toggleModal}>모달 열기</button>
-        {isModalOpen && (
-          <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="40%">
-            {/* 보여줄 컴포넌트 자리 */}
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                background: 'blue'
-              }}
-            ></div>
-          </Modal>
-        )}
-      </div>
       <Container>
         <Category>카테고리</Category>
         <FeedSection feeds={feeds} />
         <Follower>팔로우</Follower>
-        <Btn>작성</Btn>
+        <Write_Btn onClick={toggleModal}>작성</Write_Btn>
       </Container>
+      <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
+        {/* 보여줄 컴포넌트 자리 */}
+        <div>작성폼 컴포넌트</div>
+      </Modal>
     </>
   );
 };
@@ -76,6 +55,15 @@ const Container = styled.div`
 
 const Follower = styled.div`
   border: 1px black solid;
+`;
+
+const Write_Btn = styled.button`
+  width: 50px;
+  height: 50px;
+  border-radius: 25%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 `;
 
 export default Home;

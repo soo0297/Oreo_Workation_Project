@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import useModal from './custom/useModal';
 import Modal from './Modal';
 import Preview from './Preview';
+import { useState } from 'react';
 
 const FeedSection = ({ feeds }) => {
   const { isModalOpen, toggleModal } = useModal();
-  console.log(feeds);
+  const [selectedFeed, setSelectedFeed] = useState();
 
   return (
     <>
@@ -17,9 +18,14 @@ const FeedSection = ({ feeds }) => {
                 <img src={feed.author_profile_url} />
                 <p>{feed.author_name}</p>
               </User_Container>
-              <Content_Container onClick={toggleModal}>
+              <Content_Container
+                onClick={() => {
+                  toggleModal(feed);
+                  setSelectedFeed(feed);
+                }}
+              >
                 <h3>{feed.title}</h3>
-                <Category_Wrapper style={{}}>
+                <Category_Wrapper>
                   <div>{feed.category_region}</div>
                   <div>{feed.category_tag}</div>
                 </Category_Wrapper>
@@ -33,13 +39,7 @@ const FeedSection = ({ feeds }) => {
       </FeedSection_Wrapper>
       <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="70%" $height="70%">
         {/* 보여줄 컴포넌트 자리 */}
-        <Preview
-          style={{
-            width: '100%',
-            height: '100%',
-            background: 'blue'
-          }}
-        ></Preview>
+        <Preview feed={selectedFeed} />
       </Modal>
     </>
   );
