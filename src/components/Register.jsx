@@ -1,32 +1,32 @@
 import styled from 'styled-components';
-import Register from './Register';
-import { useState } from 'react';
+import useAuth from './custom/useAuth';
 
-const Login = ({ toggleModal, handleSignIn }) => {
+const Register = ({ setIsRegisterOpen }) => {
   let user = {
     email: '',
-    password: ''
+    password: '',
+    nickname: ''
   };
 
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const { handleSignUp } = useAuth();
 
   return (
     <Container>
       <input type="text" onChange={(e) => (user.email = e.target.value)} />
       <input type="password" onChange={(e) => (user.password = e.target.value)} />
-      <button onClick={() => handleSignIn(user, toggleModal)}>로그인</button>
-      <button onClick={() => setIsRegisterOpen((prev) => !prev)}>회원가입</button>
-      {isRegisterOpen && <Register setIsRegisterOpen={setIsRegisterOpen} />}
+      <input type="text" onChange={(e) => (user.nickname = e.target.value)} />
+      <button onClick={() => handleSignUp(user, setIsRegisterOpen)}>가입하기</button>
+      <button onClick={() => setIsRegisterOpen((prev) => !prev)}>로그인하러 가기</button>
     </Container>
   );
 };
 
 const Container = styled.div`
-  position: relative;
+  position: absolute;
 
   width: 100%;
   height: 100%;
-  background: purple;
+  background: yellow;
 
   display: flex;
   flex-direction: column;
@@ -40,6 +40,8 @@ const Container = styled.div`
     border: none;
     border-radius: 10px;
   }
+
+  z-index: 1;
 `;
 
-export default Login;
+export default Register;

@@ -8,8 +8,6 @@ import Modal from '../components/common/Modal';
 import FeedForm from '../components/FeedForm';
 
 const Home = () => {
-  console.log('home');
-
   const [feeds, setFeeds] = useState([]);
   const [filterFeed, setFilterFeed] = useState([]);
   const { isModalOpen, toggleModal } = useModal();
