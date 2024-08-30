@@ -44,7 +44,7 @@ const Home = () => {
       {isModalOpen && (
         <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
           {/* 보여줄 컴포넌트 자리 */}
-          <FeedForm />
+          <FeedForm setFeeds={setFeeds} toggleModal={toggleModal} />
         </Modal>
       )}
     </>
