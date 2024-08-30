@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import supabase from '../Supabase';
+import useDatabase from './useDatabase';
 
 const useAuth = () => {
   const [isSignedIn, setSignIn] = useState(false);
+  const { createUser, readUser } = useDatabase();
 
   // 로그인 상태 확인
   useEffect(() => {
     // 테스트를 위한 로그아웃(제거 예정)
-    // handleSignOut();
+    handleSignOut();
     getSession();
   }, []);
 
@@ -15,21 +17,23 @@ const useAuth = () => {
     try {
       const { data, error } = await supabase.auth.getSession();
       error && alert('세션을 불러오는 도중 오류가 발생하였습니다.', error);
-      await handleAuthToggle(data.session);
+      data.session && (await handleAuthToggle());
 
-      //   const { _, _error } = supabase.auth.onAuthStateChange((event, session) => {
-      //     console.log('event: ', event);
-      //     console.log('session: ', session);
-      //   });
-      //   _error && alert('인증 상태 리스너에서 오류가 발생하였습니다.', error);
+      const { _, _error } = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN') {
+          const userId = session.user.id;
+          readUser(userId);
+        }
+      });
+      _error && alert('인증 상태 리스너에서 오류가 발생하였습니다.', error);
     } catch (err) {
       alert('세션을 불러오는 도중 오류가 발생하였습니다.', err);
     }
   };
 
   // 로그인 상태 변경
-  const handleAuthToggle = async (session) => {
-    session && setSignIn(true);
+  const handleAuthToggle = async () => {
+    setSignIn(true);
   };
 
   // 계정 등록
@@ -39,6 +43,9 @@ const useAuth = () => {
         email: email,
         password: password
       });
+
+      const userId = data.user.id;
+      await createUser(userId, nickname);
 
       data && onSuccess((prev) => !prev);
     } catch (err) {

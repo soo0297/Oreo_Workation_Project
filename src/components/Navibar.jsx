@@ -3,8 +3,11 @@ import useAuth from './custom/useAuth';
 import Modal from './common/Modal';
 import Login from './Login';
 import useModal from './custom/useModal';
+import { userContext } from './context/User';
+import { Link } from 'react-router-dom';
 
 const Navibar = () => {
+  const { profileUrl } = userContext();
   const { isSignedIn, handleSignIn } = useAuth();
   const { isModalOpen, toggleModal } = useModal();
 
@@ -19,13 +22,11 @@ const Navibar = () => {
       ></div>
       <RightItem_Wrapper>
         {isSignedIn ? (
-          <div
-            style={{
-              height: '70%',
-              width: '80px',
-              background: 'white'
-            }}
-          ></div>
+          <Image_Wrapper>
+            <Link to={'/mypage'}>
+              <img src={profileUrl} />
+            </Link>
+          </Image_Wrapper>
         ) : (
           <button onClick={toggleModal}>로그인</button>
         )}
@@ -55,11 +56,29 @@ const NavigationBar = styled.nav`
 const RightItem_Wrapper = styled.div`
   height: 70%;
   width: 80px;
-  background: blue;
 
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Image_Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid black;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  object-fit: cover;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export default Navibar;
