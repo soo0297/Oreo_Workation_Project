@@ -23,19 +23,40 @@ const FeedForm = ({ toggleModal }) => {
   const regions = ['서울', '경기', '인천', '제주도', '전라도', '경상도(+독도)', '충청도', '강원도'];
   const tags = ['카페', '바', '공유오피스', '기타'];
 
-  async function createPost() {
-    const { data } = await supabase.from('feed').insert({
-      title: formData.title,
-      content: formData.content,
-      img_url: formData.img_url,
-      category_region: formData.category_region,
-      category_tag: formData.category_tag
-    });
-  }
+  const handleImageChange = (e) => {
+    formData = { ...formData, img_url: e.target.files[0] };
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createPost();
+    const { title, content, img_url, category_region, category_tag } = formData;
+
+    //이미지 아이디 랜덤으로 만들기 로직
+    const now = new Date();
+
+    // 날짜를 'YYYYMMDD' 형식으로 변환
+    const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
+
+    // 시간 부분을 'HHMMSS' 형식으로 변환
+    const timePart = now.toTimeString().slice(0, 8).replace(/:/g, '');
+
+    // 4자리 난수 생성
+    const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
+
+    // 날짜, 시간, 난수를 결합하여 최종 문자열 생성
+    const imgID = `${datePart}${timePart}${randomFourDigit}`;
+
+    const { data, error } = await supabase.storage.from('photos').upload(`public/${imgID}`, img_url);
+
+    let photoUrl = `${supabase.storage.from('photos').getPublicUrl(`public/${img_url.name}`).data.publicUrl}`;
+
+    const { error: feedError } = await supabase.from('feed').insert({
+      title,
+      content,
+      img_url: photoUrl,
+      category_region,
+      category_tag
+    });
 
     // 여기에서 실제로 사용자 정보를 가져오거나 설정하는 로직을 추가해야함
     // 예를 들어, 로그인된 사용자의 정보를 가져와서 설정합니다.
@@ -46,10 +67,6 @@ const FeedForm = ({ toggleModal }) => {
     // });
     setSubmitted(true);
   };
-
-  //   const handleGoHome = () => {
-  //     navigate('/');
-  //   };
 
   return (
     <div>
@@ -128,7 +145,7 @@ const FeedForm = ({ toggleModal }) => {
                 formData.img_url = e.target.value;
               }}
             /> */}
-            <input type="file" accept="image/*" />
+            <input type="file" accept="image/*" onChange={handleImageChange} />
           </div>
 
           <button type="submit">업로드하기</button>
@@ -136,7 +153,9 @@ const FeedForm = ({ toggleModal }) => {
       ) : (
         <div>
           <h2>업로드가 성공적으로 되었습니다!</h2>
-          <button onClick={toggleModal}>확인</button>
+          <button type="button" onClick={toggleModal}>
+            확인
+          </button>
         </div>
       )}
     </div>
