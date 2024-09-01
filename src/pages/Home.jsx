@@ -9,33 +9,57 @@ import FeedForm from '../components/FeedForm';
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);
-  const [filterFeed, setFilterFeed] = useState([]);
+  const [category, setCategory] = useState('All');
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const { isModalOpen, toggleModal } = useModal();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await supabase.from('feed').select('*');
-      if (error) {
-        console.log('error => ', error);
-      } else {
-        console.log('data => ', data);
+  const ITEM_PER_PAGE = 5;
+
+  const fetchData = async (page) => {
+    setLoading(true);
+
+    let query = supabase
+      .from('feed')
+      .select('*')
+      .range((page - 1) * ITEM_PER_PAGE, page * ITEM_PER_PAGE - 1);
+
+    if (category !== 'All') {
+      query = query.eq('category_region', category);
+    }
+
+    const { data, error } = await query;
+    if (error) {
+      console.log('error => ', error);
+    } else {
+      if (page === 1) {
         setFeeds(data);
-        setFilterFeed(data);
+      } else {
+        setFeeds((prev) => [...prev, ...data]);
       }
-    };
+      console.log('data => ', feeds);
+      setHasMore(data.length > 0);
+    }
 
-    fetchData();
-  }, []);
+    setLoading(false);
+  };
 
-  console.log(filterFeed);
+  useEffect(() => {
+    setPage(1);
+    setFeeds([]);
+    fetchData(1);
+  }, [category]);
+
+  useEffect(() => {
+    fetchData(page);
+  }, [page]);
 
   return (
     <>
       <Container>
-        <Category feeds={feeds} setFilterFeed={setFilterFeed}>
-          카테고리
-        </Category>
-        <FeedSection feeds={filterFeed} />
+        <Category setCategory={setCategory}>카테고리</Category>
+        <FeedSection feeds={feeds} setPage={setPage} loading={loading} hasMore={hasMore} />
         <Follower>팔로우</Follower>
         <Write_Btn onClick={toggleModal}>작성</Write_Btn>
       </Container>
