@@ -26,8 +26,6 @@ const userReducer = (state, action) => {
         ...state,
         ...action.payload
       };
-    case 'text':
-      return console.log('test');
     default:
       return state;
   }

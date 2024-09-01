@@ -3,6 +3,7 @@ import Register from './Register';
 import { useState } from 'react';
 
 const Login = ({ toggleModal, handleSignIn }) => {
+  console.log('login');
   let user = {
     email: '',
     password: ''

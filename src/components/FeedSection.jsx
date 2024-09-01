@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import useModal from './custom/useModal';
 import Preview from './Preview';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from './common/Modal';
 
 const FeedSection = ({ feeds, setPage, loading, hasMore }) => {
@@ -105,4 +105,4 @@ const Category_Wrapper = styled.div`
   align-items: center;
   gap: 10px;
 `;
-export default FeedSection;
+export default React.memo(FeedSection);

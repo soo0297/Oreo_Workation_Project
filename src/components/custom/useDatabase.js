@@ -10,7 +10,7 @@ const useDatabase = () => {
       const data = {
         user_id: userId,
         nickname: nickname,
-        profile_url: ''
+        profile_url: 'https://cdn.icon-icons.com/icons2/2415/PNG/512/react_original_logo_icon_146374.png' // Default 값
       };
 
       const { error } = await supabase.from('user').insert(data);

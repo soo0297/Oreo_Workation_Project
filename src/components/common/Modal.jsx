@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
+import React from 'react';
 
 const Modal = ({ $width, $height, children, toggleModal }) => {
   // 백그라운드 클릭시 "모달 닫기"를 위한
@@ -54,4 +55,4 @@ const ModalContent = styled.div`
   padding: 15px;
 `;
 
-export default Modal;
+export default React.memo(Modal);

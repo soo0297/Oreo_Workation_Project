@@ -7,6 +7,7 @@ import { userContext } from './context/User';
 import { Link } from 'react-router-dom';
 
 const Navibar = () => {
+  console.log('navibar');
   const { profileUrl } = userContext();
   const { isSignedIn, handleSignIn } = useAuth();
   const { isModalOpen, toggleModal } = useModal();
@@ -73,11 +74,13 @@ const Image_Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  object-fit: cover;
+  overflow: hidden;
 
   img {
     width: 100%;
     height: 100%;
+
+    object-fit: cover;
   }
 `;
 
