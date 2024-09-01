@@ -20,6 +20,7 @@ const useAuth = () => {
       data.session && (await handleAuthToggle());
 
       const { _, _error } = supabase.auth.onAuthStateChange((event, session) => {
+        console.log('event: ', event);
         if (event === 'SIGNED_IN') {
           const userId = session.user.id;
           readUser(userId);
@@ -45,6 +46,7 @@ const useAuth = () => {
       });
 
       const userId = data.user.id;
+      console.log('userId: ', userId);
       await createUser(userId, nickname);
 
       data && onSuccess((prev) => !prev);
