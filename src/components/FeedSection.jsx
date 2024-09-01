@@ -1,12 +1,34 @@
 import styled from 'styled-components';
 import useModal from './custom/useModal';
 import Preview from './Preview';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from './common/Modal';
 
-const FeedSection = ({ feeds }) => {
+const FeedSection = ({ feeds, setPage, loading, hasMore }) => {
   const { isModalOpen, toggleModal } = useModal();
   const [selectedFeed, setSelectedFeed] = useState();
+  //무한스크롤 시작
+
+  useEffect(() => {
+    if (loading) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      { threshold: 1.0 }
+    );
+    const target = document.getElementById('observer');
+    if (target) {
+      observer.observe(target);
+    }
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [loading, hasMore]);
+
+  //무한스크롤 끝
 
   return (
     <>
@@ -35,6 +57,9 @@ const FeedSection = ({ feeds }) => {
             </Feed>
           );
         })}
+        {loading && <p>Loading...</p>}
+        {!hasMore && <p>No more items to load</p>}
+        <div id="observer">{/* 옵저버 구역 */}</div>
       </FeedSection_Wrapper>
       {isModalOpen && (
         <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="70%" $height="70%">

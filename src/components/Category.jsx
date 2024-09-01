@@ -1,19 +1,10 @@
 import styled from 'styled-components';
 
-const Category = ({ feeds, setFilterFeed }) => {
+const Category = ({ setCategory }) => {
   //카테고리 클릭 이벤트
   const CategoryHandler = (e) => {
     const id = e.target.id;
-
-    if (id === 'All') {
-      setFilterFeed(feeds);
-    } else {
-      setFilterFeed(
-        feeds.filter((feed) => {
-          return feed.category_region === id;
-        })
-      );
-    }
+    setCategory(id);
   };
   return (
     <CategoryArea>
