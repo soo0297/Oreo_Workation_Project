@@ -11,7 +11,7 @@ const initialState = {
 
 const UserProvider = ({ children }) => {
   const [user, dispatch] = useReducer(userReducer, initialState);
-
+  // console.log('user: ', user);
   return (
     <UserContext.Provider value={user}>
       <UserDispatchContext.Provider value={dispatch}>{children}</UserDispatchContext.Provider>

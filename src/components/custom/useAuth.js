@@ -1,41 +1,41 @@
 import { useEffect, useState } from 'react';
 import supabase from '../Supabase';
 import useDatabase from './useDatabase';
+import useAuthStorage from './useAuthStorage';
 
 const useAuth = () => {
-  const [isSignedIn, setSignIn] = useState(false);
+  // const [isSignedIn, setSignIn] = useState(false);
   const { createUser, readUser } = useDatabase();
+  const { setSignInFlag } = useAuthStorage();
 
   // 로그인 상태 확인
   useEffect(() => {
-    // 테스트를 위한 로그아웃(제거 예정)
-    handleSignOut();
+    // handleSignOut(); // 테스트를 위한 로그아웃(제거 예정)
     getSession();
   }, []);
 
   const getSession = async () => {
     try {
       const { data, error } = await supabase.auth.getSession();
-      error && alert('세션을 불러오는 도중 오류가 발생하였습니다.', error);
-      data.session && (await handleAuthToggle());
 
-      const { _, _error } = supabase.auth.onAuthStateChange((event, session) => {
-        console.log('event: ', event);
-        if (event === 'SIGNED_IN') {
-          const userId = session.user.id;
-          readUser(userId);
-        }
-      });
-      _error && alert('인증 상태 리스너에서 오류가 발생하였습니다.', error);
+      if (error) {
+        // 에러 처리
+        throw new Error(error.message);
+      } else if (data.session) {
+        // 성공 처리
+        const userId = data.session.user.id;
+        data.session && userId && (await readUser(userId));
+      }
     } catch (err) {
-      alert('세션을 불러오는 도중 오류가 발생하였습니다.', err);
+      console.log(err);
+      alert('세션을 불러오는 도중 오류가 발생하였습니다.', err.message);
     }
   };
 
   // 로그인 상태 변경
-  const handleAuthToggle = async () => {
-    setSignIn(true);
-  };
+  // const handleAuthToggle = async () => {
+  //   setSignIn(true);
+  // };
 
   // 계정 등록
   const handleSignUp = async ({ email, password, nickname }, onSuccess) => {
@@ -48,6 +48,7 @@ const useAuth = () => {
       const userId = data.user.id;
       console.log('userId: ', userId);
       await createUser(userId, nickname);
+      // await handleAuthToggle();
 
       data && onSuccess((prev) => !prev);
     } catch (err) {
@@ -63,7 +64,11 @@ const useAuth = () => {
         password: password
       });
 
-      await handleAuthToggle(data.session);
+      const userId = data.user.id;
+      await readUser(userId);
+      await setSignInFlag('signInFlag', 'true');
+
+      // await handleAuthToggle(data.session);
 
       if (error) {
         // 로그인 실패 시
@@ -90,7 +95,7 @@ const useAuth = () => {
     }
   };
 
-  return { isSignedIn, handleSignUp, handleSignIn, handleSignOut };
+  return { handleSignUp, handleSignIn, handleSignOut };
 };
 
 export default useAuth;
