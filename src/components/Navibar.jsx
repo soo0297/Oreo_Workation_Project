@@ -5,12 +5,15 @@ import Login from './Login';
 import useModal from './custom/useModal';
 import { userContext } from './context/User';
 import { Link } from 'react-router-dom';
+import useAuthStorage from './custom/useAuthStorage';
 
 const Navibar = () => {
-  console.log('navibar');
   const { profileUrl } = userContext();
-  const { isSignedIn, handleSignIn } = useAuth();
+  const { handleSignIn } = useAuth();
+  const { getSignInFlag } = useAuthStorage();
   const { isModalOpen, toggleModal } = useModal();
+
+  const signInFlag = getSignInFlag();
 
   return (
     <NavigationBar>
@@ -22,7 +25,7 @@ const Navibar = () => {
         }}
       ></div>
       <RightItem_Wrapper>
-        {isSignedIn ? (
+        {signInFlag == 'true' && profileUrl ? (
           <Image_Wrapper>
             <Link to={'/mypage'}>
               <img src={profileUrl} />
