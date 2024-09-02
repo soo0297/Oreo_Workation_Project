@@ -1,21 +1,17 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-//예시 이미지 파일
-import t1 from '../img/t1.jpg';
-import t2 from '../img/t2.png';
-import t3 from '../img/t3.jpg';
 
-const Carousel = () => {
-  //이미지 목데이터
-  const images = [t1, t2, t3];
+const Carousel = ({ images }) => {
   //이미지 인덱스
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextSlide = () => {
+  const nextSlide = (e) => {
+    e.stopPropagation();
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
-  const prevSlide = () => {
+  const prevSlide = (e) => {
+    e.stopPropagation();
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
@@ -70,7 +66,7 @@ const PrevBtn = styled.button`
   border: none;
   padding: 10px;
   cursor: pointer;
-  z-index: 10;
+  z-index: 1;
 `;
 const NextBtn = styled.button`
   right: 10px;
@@ -82,6 +78,6 @@ const NextBtn = styled.button`
   border: none;
   padding: 10px;
   cursor: pointer;
-  z-index: 10;
+  z-index: 1;
 `;
 export default Carousel;

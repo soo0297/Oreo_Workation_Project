@@ -3,14 +3,10 @@ import supabase from '../components/Supabase';
 import styled from 'styled-components';
 import Category from '../components/Category';
 import FeedSection from '../components/FeedSection';
-import FeedForm from '../components/FeedForm';
 import Following from '../components/Following';
-import useAuth from '../components/custom/useAuth';
 import ModalContent from '../components/common/ModalContent';
 import useModal from '../components/custom/useModal';
 import { userContext } from '../components/context/User';
-import useAuthStorage from '../components/custom/useAuthStorage';
-import Carousel from '../components/Carousel';
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import useModal from './custom/useModal';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import ModalContent from './common/ModalContent';
+import Carousel from './Carousel';
 
 const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
   const { isTypeModalOpen, openTypeModal, closeModal } = useModal();
@@ -64,7 +65,7 @@ const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
                   {feed.category_region ? <CategoryView>{feed.category_region}</CategoryView> : ''}
                   {feed.category_tag ? <CategoryView>{feed.category_tag}</CategoryView> : ''}
                 </Category_Wrapper>
-                <img src={feed.img_url} />
+                <Carousel images={JSON.parse(feed.img_url)} />
                 <p>{feed.content}</p>
                 <p>{feed.date}</p>
               </Content_Container>
