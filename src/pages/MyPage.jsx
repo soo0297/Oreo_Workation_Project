@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import supabase from '../components/Supabase';
+import useAuth from '../components/custom/useAuth';
 
 const Container = styled.div`
   padding: 20px;
@@ -157,11 +158,15 @@ const MyPage = () => {
   const [updatedTitle, setUpdatedTitle] = useState('');
   const [updatedContent, setUpdatedContent] = useState('');
   const navigate = useNavigate();
+  const { handleSignOut } = useAuth();
 
   useEffect(() => {
     const fetchProfileAndFeeds = async () => {
       try {
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        const {
+          data: { user },
+          error: userError
+        } = await supabase.auth.getUser();
         if (userError) throw userError;
 
         if (!user) return;
@@ -197,15 +202,15 @@ const MyPage = () => {
 
   const handleNameChange = async () => {
     try {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError
+      } = await supabase.auth.getUser();
       if (userError) throw userError;
 
       if (!user) return;
 
-      const { data, error } = await supabase
-        .from('feed')
-        .update({ author_name: newName })
-        .eq('id', user.id);
+      const { data, error } = await supabase.from('feed').update({ author_name: newName }).eq('id', user.id);
 
       if (error) throw error;
 
@@ -257,17 +262,17 @@ const MyPage = () => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
+  // const handleLogout = async () => {
+  //   try {
+  //     const { error } = await supabase.auth.signOut();
 
-      if (error) throw error;
+  //     if (error) throw error;
 
-      navigate('/'); // Main page로 이동
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+  //     navigate('/'); // Main page로 이동
+  //   } catch (error) {
+  //     console.error('Error logging out:', error);
+  //   }
+  // };
 
   return (
     <Container>
@@ -279,7 +284,7 @@ const MyPage = () => {
           {newName === '' ? (
             <div>
               <Button onClick={() => setNewName(profile.author_name)}>이름 변경</Button>
-              <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+              <LogoutButton onClick={() => handleSignOut(() => navigate('/'))}>로그아웃</LogoutButton>
             </div>
           ) : (
             <div>

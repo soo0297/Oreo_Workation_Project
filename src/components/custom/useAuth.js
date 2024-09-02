@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import supabase from '../Supabase';
 import useDatabase from './useDatabase';
-import useAuthStorage from './useAuthStorage';
+import { userDispatchContext } from '../context/User';
 
 const useAuth = () => {
   // const [isSignedIn, setSignIn] = useState(false);
   const { createUser, readUser } = useDatabase();
-  const { setSignInFlag } = useAuthStorage();
+  const dispatch = userDispatchContext();
 
   // 로그인 상태 확인
   useEffect(() => {
-    // handleSignOut(); // 테스트를 위한 로그아웃(제거 예정)
+    // handleSignOut();
     getSession();
   }, []);
 
@@ -23,6 +23,7 @@ const useAuth = () => {
         throw new Error(error.message);
       } else if (data.session) {
         // 성공 처리
+        console.log('data.session: ', data.session);
         const userId = data.session.user.id;
         data.session && userId && (await readUser(userId));
       }
@@ -34,7 +35,7 @@ const useAuth = () => {
 
   // 로그인 상태 변경
   // const handleAuthToggle = async () => {
-  //   setSignIn(true);
+  //   setSignIn((prev) => !prev);
   // };
 
   // 계정 등록
@@ -46,11 +47,11 @@ const useAuth = () => {
       });
 
       const userId = data.user.id;
-      console.log('userId: ', userId);
       await createUser(userId, nickname);
-      // await handleAuthToggle();
 
-      data && onSuccess((prev) => !prev);
+      const { error } = await supabase.auth.signOut();
+
+      data && onSuccess();
     } catch (err) {
       alert('계정 등록하는데 오류가 발생하였습니다.', err);
     }
@@ -66,15 +67,12 @@ const useAuth = () => {
 
       const userId = data.user.id;
       await readUser(userId);
-      await setSignInFlag('signInFlag', 'true');
-
-      // await handleAuthToggle(data.session);
 
       if (error) {
-        // 로그인 실패 시
+        // 실패 시
         alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
       } else if (data) {
-        // 로그인 성공 시
+        // 성공 시
         if (onSuccess && typeof onSuccess === 'function') {
           onSuccess(); // 델리게이트 실행
         }
@@ -85,12 +83,25 @@ const useAuth = () => {
   };
 
   // 로그아웃
-  const handleSignOut = async () => {
+  const handleSignOut = async (onSuccess) => {
     try {
       const { error } = await supabase.auth.signOut();
 
+      dispatch({ type: 'initialize' });
+
+      if (error) {
+        // 실패 시
+        alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
+      } else {
+        // 성공 시
+        if (onSuccess && typeof onSuccess === 'function') {
+          onSuccess(); // 델리게이트 실행
+        }
+      }
+
       error && alert('로그아웃 오류가 발생하였습니다.', error);
     } catch (err) {
+      console.log(err);
       alert('네트워크 오류가 발생하였습니다.', err);
     }
   };
