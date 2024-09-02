@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Carousel from './Carousel';
 
 const Preview = ({ feed }) => {
   return !feed ? (
@@ -12,7 +13,8 @@ const Preview = ({ feed }) => {
       </ProfileContainer>
       <Container>
         <ImgContainer>
-          <FeedImage src={feed.img_url} alt={feed.img_url} />
+          <Carousel images={JSON.parse(feed.img_url)} />
+          {/* <FeedImage src={feed.img_url} alt={feed.img_url} /> */}
         </ImgContainer>
         <hr style={{ height: '90%' }} />
         <ContentContainer>
@@ -53,11 +55,11 @@ const ImgContainer = styled.div`
   flex: 1;
 `;
 
-const FeedImage = styled.img`
-  display: inline-block;
-  max-width: 100%;
-  height: auto;
-`;
+// const FeedImage = styled.img`
+//   display: inline-block;
+//   max-width: 100%;
+//   height: auto;
+// `;
 const ContentContainer = styled.div`
   flex: 1;
 `;
