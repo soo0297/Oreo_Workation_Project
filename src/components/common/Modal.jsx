@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import React from 'react';
 
-const Modal = ({ $width, $height, children, toggleModal }) => {
+const Modal = ({ $width, $height, children, closeModal }) => {
   // 백그라운드 클릭시 "모달 닫기"를 위한
   const modalBackground = useRef();
 
@@ -12,7 +12,7 @@ const Modal = ({ $width, $height, children, toggleModal }) => {
       onClick={(e) => {
         // 백그라운드 클릭시 "모달 닫기"
         if (e.target === modalBackground.current) {
-          toggleModal();
+          closeModal();
         }
       }}
     >

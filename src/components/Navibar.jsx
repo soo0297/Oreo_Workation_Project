@@ -1,19 +1,14 @@
 import styled from 'styled-components';
 import useAuth from './custom/useAuth';
-import Modal from './common/Modal';
-import Login from './Login';
 import useModal from './custom/useModal';
-import { userContext } from './context/User';
 import { Link } from 'react-router-dom';
-import useAuthStorage from './custom/useAuthStorage';
+import { userContext } from './context/User';
+import ModalContent from './common/ModalContent';
 
 const Navibar = () => {
-  const { profileUrl } = userContext();
-  const { handleSignIn } = useAuth();
-  const { getSignInFlag } = useAuthStorage();
-  const { isModalOpen, toggleModal } = useModal();
-
-  const signInFlag = getSignInFlag();
+  const { isSignedIn, profileUrl } = userContext();
+  const { handleSignIn, handleSignUp } = useAuth();
+  const { isTypeModalOpen, openTypeModal, closeModal } = useModal();
 
   return (
     <NavigationBar>
@@ -24,23 +19,28 @@ const Navibar = () => {
           background: 'white'
         }}
       ></div>
-      <RightItem_Wrapper>
-        {signInFlag == 'true' && profileUrl ? (
-          <Image_Wrapper>
+      <RightItemWrapper>
+        {isSignedIn ? (
+          <ImageWrapper>
             <Link to={'/mypage'}>
               <img src={profileUrl} />
             </Link>
-          </Image_Wrapper>
+          </ImageWrapper>
         ) : (
-          <button onClick={toggleModal}>로그인</button>
+          <RightItemContainer>
+            <button onClick={() => openTypeModal('login')}>로그인</button>
+            <button onClick={() => openTypeModal('register')}>회원가입</button>
+          </RightItemContainer>
         )}
-      </RightItem_Wrapper>
-      {isModalOpen && (
-        <Modal toggleModal={toggleModal} $width="25%" $height="40%">
-          <Login toggleModal={toggleModal} handleSignIn={handleSignIn}></Login>
-        </Modal>
+      </RightItemWrapper>
+      {isTypeModalOpen && (
+        <ModalContent
+          type={isTypeModalOpen}
+          closeModal={closeModal}
+          handleSignIn={handleSignIn}
+          handleSignUp={handleSignUp}
+        />
       )}
-      {signInFlag && <Write_Btn onClick={toggleModal}>작성</Write_Btn>}
     </NavigationBar>
   );
 };
@@ -58,18 +58,35 @@ const NavigationBar = styled.nav`
   padding-right: 100px;
 `;
 
-const RightItem_Wrapper = styled.div`
+const RightItemWrapper = styled.div`
   height: 70%;
-  width: 80px;
+  width: auto;
 
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const Image_Wrapper = styled.div`
-  width: 100%;
+const RightItemContainer = styled.div`
   height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+
+  button {
+    height: 70%;
+    aspect-ratio: 16 / 9;
+
+    border: none;
+    border-radius: 15px;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  height: 100%;
+  aspect-ratio: 1;
 
   border: 1px solid black;
   border-radius: 10px;
@@ -86,17 +103,6 @@ const Image_Wrapper = styled.div`
 
     object-fit: cover;
   }
-`;
-
-const Write_Btn = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 25%;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  z-index: 1;
 `;
 
 export default Navibar;

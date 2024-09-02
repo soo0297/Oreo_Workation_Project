@@ -2,7 +2,7 @@ import { useState } from 'react';
 import supabase from './Supabase';
 import { userContext } from './context/User';
 
-const FeedForm = ({ toggleModal }) => {
+const FeedForm = ({ closeModal }) => {
   const { user } = userContext();
   console.log(user);
 
@@ -146,7 +146,7 @@ const FeedForm = ({ toggleModal }) => {
       ) : (
         <div>
           <h2>업로드가 성공적으로 되었습니다!</h2>
-          <button type="button" onClick={toggleModal}>
+          <button type="button" onClick={closeModal}>
             확인
           </button>
         </div>

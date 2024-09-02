@@ -1,12 +1,19 @@
 import styled from 'styled-components';
 import useModal from './custom/useModal';
-import Preview from './Preview';
-import React, { useEffect, useRef, useState } from 'react';
-import Modal from './common/Modal';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import ModalContent from './common/ModalContent';
 
 const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
-  const { isModalOpen, toggleModal } = useModal();
-  const [selectedFeed, setSelectedFeed] = useState();
+  const { isTypeModalOpen, openTypeModal, closeModal } = useModal();
+  const [selectedFeed, setSelectedFeed] = useState(null);
+
+  const handleFeedClick = useCallback(
+    (feed) => {
+      setSelectedFeed(feed);
+      openTypeModal('preview');
+    },
+    [openTypeModal]
+  );
 
   //무한스크롤 시작
   const observerRef = useRef();
@@ -48,8 +55,7 @@ const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
               </User_Container>
               <Content_Container
                 onClick={() => {
-                  toggleModal(feed);
-                  setSelectedFeed(feed);
+                  handleFeedClick(feed);
                 }}
               >
                 <h3>{feed.title}</h3>
@@ -69,12 +75,7 @@ const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
         {!hasMore && <p>No more items to load</p>}
         <div ref={observerRef}>{/* 옵저버 구역 */}</div>
       </FeedSection_Wrapper>
-      {isModalOpen && (
-        <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="70%" $height="70%">
-          {/* 보여줄 컴포넌트 자리 */}
-          <Preview feed={selectedFeed} />
-        </Modal>
-      )}
+      {isTypeModalOpen && <ModalContent type={isTypeModalOpen} closeModal={closeModal} selectedFeed={selectedFeed} />}
     </>
   );
 };

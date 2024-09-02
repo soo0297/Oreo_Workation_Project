@@ -28,7 +28,7 @@ const useDatabase = () => {
 
       dispatch({
         type: 'updated',
-        payload: { userId: user_id, nickname: nickname, profileUrl: profile_url }
+        payload: { isSignedIn: true, userId: user_id, nickname: nickname, profileUrl: profile_url }
       });
     } catch (err) {
       console.log(err);
