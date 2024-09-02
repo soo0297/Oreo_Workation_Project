@@ -6,10 +6,11 @@ import Category from '../components/Category';
 import FeedSection from '../components/FeedSection';
 import Modal from '../components/common/Modal';
 import FeedForm from '../components/FeedForm';
+import Following from '../components/Following';
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);
-  const [category, setCategory] = useState('All');
+  const [category, setCategory] = useState({ RegionId: 'All', TagId: 'All' });
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -23,10 +24,16 @@ const Home = () => {
     let query = supabase
       .from('feed')
       .select('*')
+      .order('date', { ascending: false })
+      .order('id', { ascending: false })
       .range((page - 1) * ITEM_PER_PAGE, page * ITEM_PER_PAGE - 1);
 
-    if (category !== 'All') {
-      query = query.eq('category_region', category);
+    if (category.RegionId !== 'All') {
+      query = query.eq('category_region', category.RegionId);
+    }
+
+    if (category.TagId !== 'All') {
+      query = query.eq('category_tag', category.TagId);
     }
 
     const { data, error } = await query;
@@ -54,13 +61,14 @@ const Home = () => {
   useEffect(() => {
     fetchData(page);
   }, [page]);
-
   return (
     <>
       <Container>
-        <Category setCategory={setCategory}>카테고리</Category>
-        <FeedSection feeds={feeds} setPage={setPage} loading={loading} hasMore={hasMore} />
-        <Follower>팔로우</Follower>
+        <Category category={category} setCategory={setCategory}>
+          카테고리
+        </Category>
+        <FeedSection feeds={feeds} setPage={setPage} loading={loading} hasMore={hasMore} category={category} />
+        <Following />
         <Write_Btn onClick={toggleModal}>작성</Write_Btn>
       </Container>
       {isModalOpen && (
@@ -84,10 +92,6 @@ const Container = styled.div`
   position: relative;
   column-gap: 60px;
   padding: 8px 16px;
-`;
-
-const Follower = styled.div`
-  border: 1px black solid;
 `;
 
 const Write_Btn = styled.button`
