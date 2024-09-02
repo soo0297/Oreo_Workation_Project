@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import supabase from './Supabase';
+import { userContext } from './context/User';
 
 const FeedForm = ({ toggleModal }) => {
+  const { user } = userContext();
+  console.log(user);
+
   let formData = {
     author_id: '',
     author_name: '',
@@ -19,7 +23,7 @@ const FeedForm = ({ toggleModal }) => {
   const [submitted, setSubmitted] = useState(false);
 
   // 카테고리 지역 및 태그 선택지
-  const regions = ['서울', '경기', '인천', '제주도', '전라도', '경상도(+독도)', '충청도', '강원도'];
+  const regions = ['서울', '경기', '인천', '제주', '전라', '경상', '충청', '강원'];
   const tags = ['카페', '바', '공유오피스', '기타'];
 
   const handleImageChange = (e) => {
@@ -39,17 +43,29 @@ const FeedForm = ({ toggleModal }) => {
     const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
     const imgID = `${datePart}${timePart}${randomFourDigit}`;
 
-    const { data, error } = await supabase.storage.from('photos').upload(`public/${imgID}`, img_url);
-
-    let photoUrl = `${supabase.storage.from('photos').getPublicUrl(`public/${img_url.name}`).data.publicUrl}`;
+    // 이미지 파일이 있을 경우 업로드 및 URL 생성
+    let photoUrl = '';
+    if (img_url) {
+      const { data, error } = await supabase.storage.from('photos').upload(`public/${imgID}`, img_url);
+      if (data && !error) {
+        photoUrl = `${supabase.storage.from('photos').getPublicUrl(`public/${img_url.name}`).data.publicUrl}`;
+      } else {
+        console.error('Error upload', error);
+      }
+    }
 
     const { error: feedError } = await supabase.from('feed').insert({
       title,
       content,
       img_url: photoUrl,
       category_region,
-      category_tag
+      category_tag,
+      date: `${new Date().toISOString().slice(0, 10)}` + ` ${new Date().toTimeString().slice(0, 8)}`
     });
+
+    if (feedError) {
+      console.error('Error insert', feedError);
+    }
 
     setSubmitted(true);
   };
