@@ -46,6 +46,9 @@ const Navibar = () => {
 };
 
 const NavigationBar = styled.nav`
+  position: sticky;
+  top: 0;
+
   background: green;
   height: 80px;
 
@@ -56,6 +59,8 @@ const NavigationBar = styled.nav`
 
   padding-left: 30px;
   padding-right: 100px;
+
+  z-index: 1;
 `;
 
 const RightItemWrapper = styled.div`
