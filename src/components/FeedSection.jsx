@@ -124,6 +124,7 @@ const Content_Container = styled.div`
   padding: 10px;
   border-radius: 20px;
   cursor: pointer;
+  gap: 5px;
 `;
 
 const Category_Wrapper = styled.div`

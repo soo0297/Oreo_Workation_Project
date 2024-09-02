@@ -9,6 +9,8 @@ import useAuth from '../components/custom/useAuth';
 import ModalContent from '../components/common/ModalContent';
 import useModal from '../components/custom/useModal';
 import { userContext } from '../components/context/User';
+import useAuthStorage from '../components/custom/useAuthStorage';
+import Carousel from '../components/Carousel';
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);
