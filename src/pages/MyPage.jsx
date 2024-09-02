@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import supabase from '../components/Supabase';
 
@@ -42,7 +43,7 @@ const FeedCard = styled.div`
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 8px;
-  width: 300px; // 카드의 너비를 넓게 설정
+  width: 300px;
   cursor: pointer;
   transition: box-shadow 0.3s;
 
@@ -77,7 +78,7 @@ const ContentPreview = styled.p`
 const EditDeleteButtons = styled.div`
   display: none;
   position: absolute;
-  bottom: 10px; // 하단으로 이동
+  bottom: 10px;
   left: 10px;
   gap: 10px;
 
@@ -118,7 +119,7 @@ const TextareaField = styled.textarea`
   margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 4px;
-  resize: none; // 크기 조정 불가능하게 설정
+  resize: none;
 `;
 
 const Button = styled.button`
@@ -137,6 +138,14 @@ const Button = styled.button`
   }
 `;
 
+const LogoutButton = styled(Button)`
+  background-color: #dc3545;
+
+  &:hover {
+    background-color: #c82333;
+  }
+`;
+
 const MyPage = () => {
   const [profile, setProfile] = useState({
     author_name: '',
@@ -147,55 +156,66 @@ const MyPage = () => {
   const [editingPost, setEditingPost] = useState(null);
   const [updatedTitle, setUpdatedTitle] = useState('');
   const [updatedContent, setUpdatedContent] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const userId = 1;
-      const { data, error } = await supabase
-        .from('feed')
-        .select('author_name, author_profile_url')
-        .eq('id', userId)
-        .single();
+    const fetchProfileAndFeeds = async () => {
+      try {
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError) throw userError;
 
-      if (error) {
-        console.error('Error fetching profile:', error);
-      } else {
+        if (!user) return;
+
+        const { data: profileData, error: profileError } = await supabase
+          .from('feed')
+          .select('author_name, author_profile_url')
+          .eq('id', user.id)
+          .single();
+
+        if (profileError) throw profileError;
+
         setProfile({
-          author_name: data.author_name,
-          author_profile_url: data.author_profile_url
+          author_name: profileData.author_name,
+          author_profile_url: profileData.author_profile_url
         });
+
+        const { data: feedsData, error: feedsError } = await supabase
+          .from('feed')
+          .select('id, title, img_url, content')
+          .eq('author_id', user.id);
+
+        if (feedsError) throw feedsError;
+
+        setFeeds(feedsData);
+      } catch (error) {
+        console.error('Error fetching profile or feeds:', error);
       }
     };
 
-    const fetchFeeds = async () => {
-      const { data, error } = await supabase
-        .from('feed')
-        .select('id, title, img_url, content')
-        .eq('author_name', profile.author_name);
-
-      if (error) {
-        console.error('Error fetching feeds:', error);
-      } else {
-        setFeeds(data);
-      }
-    };
-
-    fetchProfile();
-    fetchFeeds();
-  }, [profile.author_name]);
+    fetchProfileAndFeeds();
+  }, []);
 
   const handleNameChange = async () => {
-    const userId = 1;
-    const { data, error } = await supabase.from('feed').update({ author_name: newName }).eq('id', userId);
+    try {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError) throw userError;
 
-    if (error) {
-      console.error('Error updating name:', error);
-    } else {
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('feed')
+        .update({ author_name: newName })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
       setProfile((prevProfile) => ({
         ...prevProfile,
         author_name: newName
       }));
       setNewName('');
+    } catch (error) {
+      console.error('Error updating name:', error);
     }
   };
 
@@ -206,30 +226,46 @@ const MyPage = () => {
   };
 
   const handleSavePost = async () => {
-    const { data, error } = await supabase
-      .from('feed')
-      .update({ title: updatedTitle, content: updatedContent })
-      .eq('id', editingPost.id);
+    try {
+      const { data, error } = await supabase
+        .from('feed')
+        .update({ title: updatedTitle, content: updatedContent })
+        .eq('id', editingPost.id);
 
-    if (error) {
-      console.error('Error updating post:', error);
-    } else {
+      if (error) throw error;
+
       setFeeds(
         feeds.map((feed) =>
           feed.id === editingPost.id ? { ...feed, title: updatedTitle, content: updatedContent } : feed
         )
       );
       setEditingPost(null);
+    } catch (error) {
+      console.error('Error updating post:', error);
     }
   };
 
   const handlePostDelete = async (postId) => {
-    const { error } = await supabase.from('feed').delete().eq('id', postId);
+    try {
+      const { error } = await supabase.from('feed').delete().eq('id', postId);
 
-    if (error) {
-      console.error('Error deleting post:', error);
-    } else {
+      if (error) throw error;
+
       setFeeds(feeds.filter((feed) => feed.id !== postId));
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) throw error;
+
+      navigate('/'); // Main page로 이동
+    } catch (error) {
+      console.error('Error logging out:', error);
     }
   };
 
@@ -241,7 +277,10 @@ const MyPage = () => {
         <div>
           <ProfileName>이름: {profile.author_name}</ProfileName>
           {newName === '' ? (
-            <Button onClick={() => setNewName(profile.author_name)}>이름 변경</Button>
+            <div>
+              <Button onClick={() => setNewName(profile.author_name)}>이름 변경</Button>
+              <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+            </div>
           ) : (
             <div>
               <InputField
