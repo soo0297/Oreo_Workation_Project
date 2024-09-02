@@ -14,7 +14,7 @@ const FeedForm = ({ closeModal }) => {
     date: new Date(),
     title: '',
     content: '',
-    img_url: '',
+    img_url: [],
     category_region: '',
     category_tag: ''
   };
@@ -27,7 +27,8 @@ const FeedForm = ({ closeModal }) => {
   const tags = ['카페', '바', '공유오피스', '기타'];
 
   const handleImageChange = (e) => {
-    formData = { ...formData, img_url: e.target.files[0] };
+    const files = Array.from(e.target.files);
+    formData = { ...formData, img_url: files };
   };
 
   const handleSubmit = async (e) => {
@@ -37,18 +38,20 @@ const FeedForm = ({ closeModal }) => {
     // 이미지 파일명 랜덤으로 만들기 로직(중복된 파일선택 가능하게)
     // 날짜를 'YYYYMMDD'로 변환 , 시간을 'HHMMSS'로 변환 , 4자리 난수 생성
     // imgID = 날짜, 시간, 난수 결합하여 최종 문자열 생성
-    const now = new Date();
-    const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
-    const timePart = now.toTimeString().slice(0, 8).replace(/:/g, '');
-    const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
-    const imgID = `${datePart}${timePart}${randomFourDigit}`;
+    let photoUrl = [];
+    for (let imgFile of img_url) {
+      const now = new Date();
+      const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
+      const timePart = now.toTimeString().slice(0, 8).replace(/:/g, '');
+      const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
+      const imgID = `${datePart}${timePart}${randomFourDigit}`;
 
-    // 이미지 파일이 있을 경우 업로드 및 URL 생성
-    let photoUrl = '';
-    if (img_url) {
-      const { data, error } = await supabase.storage.from('photos').upload(`public/${imgID}`, img_url);
+      const { data, error } = await supabase.storage.from('photos').upload(`public/${imgID}`, imgFile);
       if (data && !error) {
-        photoUrl = `${supabase.storage.from('photos').getPublicUrl(`public/${img_url.name}`).data.publicUrl}`;
+        const publicUrl = `${supabase.storage.from('photos').getPublicUrl(`public/${imgID}`).data.publicUrl}`;
+        console.log(publicUrl);
+
+        photoUrl.push(publicUrl);
       } else {
         console.error('Error upload', error);
       }
@@ -138,7 +141,7 @@ const FeedForm = ({ closeModal }) => {
           </div>
 
           <div>
-            <input type="file" accept="image/*" onChange={handleImageChange} />
+            <input type="file" accept="image/*" multiple onChange={handleImageChange} />
           </div>
 
           <button type="submit">업로드하기</button>
