@@ -4,6 +4,7 @@ import useModal from './custom/useModal';
 import { Link } from 'react-router-dom';
 import { userContext } from './context/User';
 import ModalContent from './common/ModalContent';
+import oreo from '../assets/oreo.png';
 
 const Navibar = () => {
   const { isSignedIn, profileUrl } = userContext();
@@ -12,35 +13,33 @@ const Navibar = () => {
 
   return (
     <NavigationBar>
-      <div
-        style={{
-          height: '70%',
-          width: '80px',
-          background: 'white'
-        }}
-      ></div>
-      <RightItemWrapper>
-        {isSignedIn ? (
-          <ImageWrapper>
-            <Link to={'/mypage'}>
-              <img src={profileUrl} />
-            </Link>
-          </ImageWrapper>
-        ) : (
-          <RightItemContainer>
-            <button onClick={() => openTypeModal('login')}>로그인</button>
-            <button onClick={() => openTypeModal('register')}>회원가입</button>
-          </RightItemContainer>
+      <Wrapper>
+        <LeftItemWrapper>
+          <img src={oreo} />
+        </LeftItemWrapper>
+        <RightItemWrapper>
+          {isSignedIn ? (
+            <ImageWrapper>
+              <Link to={'/mypage'}>
+                <img src={profileUrl} />
+              </Link>
+            </ImageWrapper>
+          ) : (
+            <RightItemContainer>
+              <button onClick={() => openTypeModal('login')}>로그인</button>
+              <button onClick={() => openTypeModal('register')}>회원가입</button>
+            </RightItemContainer>
+          )}
+        </RightItemWrapper>
+        {isTypeModalOpen && (
+          <ModalContent
+            type={isTypeModalOpen}
+            closeModal={closeModal}
+            handleSignIn={handleSignIn}
+            handleSignUp={handleSignUp}
+          />
         )}
-      </RightItemWrapper>
-      {isTypeModalOpen && (
-        <ModalContent
-          type={isTypeModalOpen}
-          closeModal={closeModal}
-          handleSignIn={handleSignIn}
-          handleSignUp={handleSignUp}
-        />
-      )}
+      </Wrapper>
     </NavigationBar>
   );
 };
@@ -49,18 +48,25 @@ const NavigationBar = styled.nav`
   position: sticky;
   top: 0;
 
-  background: green;
+  background: white;
   height: 80px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1;
+`;
+
+const Wrapper = styled.div`
+  width: 80%;
+  height: 100%;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  padding-left: 30px;
-  padding-right: 100px;
-
-  z-index: 1;
 `;
 
 const RightItemWrapper = styled.div`
@@ -86,6 +92,17 @@ const RightItemContainer = styled.div`
 
     border: none;
     border-radius: 15px;
+  }
+`;
+
+const LeftItemWrapper = styled.div`
+  height: 70%;
+  aspect-ratio: 16 / 9;
+
+  display: flex;
+
+  img {
+    object-fit: cover;
   }
 `;
 
