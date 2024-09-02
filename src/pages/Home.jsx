@@ -6,6 +6,7 @@ import Category from '../components/Category';
 import FeedSection from '../components/FeedSection';
 import Modal from '../components/common/Modal';
 import FeedForm from '../components/FeedForm';
+import useAuthStorage from '../components/custom/useAuthStorage';
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);
@@ -14,6 +15,9 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const { isModalOpen, toggleModal } = useModal();
+  const { getSignInFlag } = useAuthStorage();
+
+  const signInFlag = getSignInFlag();
 
   const ITEM_PER_PAGE = 5;
 
@@ -61,7 +65,7 @@ const Home = () => {
         <Category setCategory={setCategory}>카테고리</Category>
         <FeedSection feeds={feeds} setPage={setPage} loading={loading} hasMore={hasMore} />
         <Follower>팔로우</Follower>
-        <Write_Btn onClick={toggleModal}>작성</Write_Btn>
+        {signInFlag && <Write_Btn onClick={toggleModal}>작성</Write_Btn>}
       </Container>
       {isModalOpen && (
         <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
