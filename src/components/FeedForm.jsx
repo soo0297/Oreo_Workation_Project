@@ -16,7 +16,6 @@ const FeedForm = ({ toggleModal }) => {
   };
   console.log(formData);
 
-  //   const [authorData, setAuthorData] = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
   // 카테고리 지역 및 태그 선택지
@@ -31,19 +30,13 @@ const FeedForm = ({ toggleModal }) => {
     e.preventDefault();
     const { title, content, img_url, category_region, category_tag } = formData;
 
-    //이미지 아이디 랜덤으로 만들기 로직
+    // 이미지 파일명 랜덤으로 만들기 로직(중복된 파일선택 가능하게)
+    // 날짜를 'YYYYMMDD'로 변환 , 시간을 'HHMMSS'로 변환 , 4자리 난수 생성
+    // imgID = 날짜, 시간, 난수 결합하여 최종 문자열 생성
     const now = new Date();
-
-    // 날짜를 'YYYYMMDD' 형식으로 변환
     const datePart = now.toISOString().slice(0, 10).replace(/-/g, '');
-
-    // 시간 부분을 'HHMMSS' 형식으로 변환
     const timePart = now.toTimeString().slice(0, 8).replace(/:/g, '');
-
-    // 4자리 난수 생성
     const randomFourDigit = Math.floor(1000 + Math.random() * 9000);
-
-    // 날짜, 시간, 난수를 결합하여 최종 문자열 생성
     const imgID = `${datePart}${timePart}${randomFourDigit}`;
 
     const { data, error } = await supabase.storage.from('photos').upload(`public/${imgID}`, img_url);
@@ -58,13 +51,6 @@ const FeedForm = ({ toggleModal }) => {
       category_tag
     });
 
-    // 여기에서 실제로 사용자 정보를 가져오거나 설정하는 로직을 추가해야함
-    // 예를 들어, 로그인된 사용자의 정보를 가져와서 설정합니다.
-    // setAuthorData({
-    //   author_id: 'user123', // 실제로는 로그인된 사용자 정보에서 가져옵니다.
-    //   author_name: 'John Doe', // 실제로는 로그인된 사용자 정보에서 가져옵니다.
-    //   author_profile_url:
-    // });
     setSubmitted(true);
   };
 
@@ -136,15 +122,6 @@ const FeedForm = ({ toggleModal }) => {
           </div>
 
           <div>
-            {/* <label htmlFor="img_url">사진 추가</label>
-            <input
-              type="text"
-              id="img_url"
-              name="img_url"
-              onChange={(e) => {
-                formData.img_url = e.target.value;
-              }}
-            /> */}
             <input type="file" accept="image/*" onChange={handleImageChange} />
           </div>
 
