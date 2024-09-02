@@ -7,6 +7,7 @@ import FeedSection from '../components/FeedSection';
 import Modal from '../components/common/Modal';
 import FeedForm from '../components/FeedForm';
 import Following from '../components/Following';
+import useAuthStorage from '../components/custom/useAuthStorage';
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);
@@ -15,6 +16,9 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const { isModalOpen, toggleModal } = useModal();
+  const { getSignInFlag } = useAuthStorage();
+
+  const signInFlag = getSignInFlag();
 
   const ITEM_PER_PAGE = 5;
 
