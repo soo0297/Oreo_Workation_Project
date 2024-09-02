@@ -4,6 +4,7 @@ const UserContext = createContext(null);
 const UserDispatchContext = createContext(null);
 
 const initialState = {
+  isSignedIn: false,
   userId: '',
   nickname: '',
   profileUrl: ''
@@ -11,7 +12,6 @@ const initialState = {
 
 const UserProvider = ({ children }) => {
   const [user, dispatch] = useReducer(userReducer, initialState);
-  // console.log('user: ', user);
   return (
     <UserContext.Provider value={user}>
       <UserDispatchContext.Provider value={dispatch}>{children}</UserDispatchContext.Provider>
@@ -25,6 +25,11 @@ const userReducer = (state, action) => {
       return {
         ...state,
         ...action.payload
+      };
+
+    case 'initialize':
+      return {
+        ...initialState
       };
     default:
       return state;

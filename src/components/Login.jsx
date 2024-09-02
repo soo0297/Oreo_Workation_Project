@@ -1,30 +1,24 @@
 import styled from 'styled-components';
-import Register from './Register';
-import { useState } from 'react';
+// import Register from './Register';
+// import { useState } from 'react';
 
-const Login = ({ toggleModal, handleSignIn }) => {
+const Login = ({ closeModal, handleSignIn }) => {
   console.log('login');
   let user = {
     email: '',
     password: ''
   };
 
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-
   return (
     <Container>
       <input type="text" onChange={(e) => (user.email = e.target.value)} />
       <input type="password" onChange={(e) => (user.password = e.target.value)} />
-      <button onClick={() => handleSignIn(user, toggleModal)}>로그인</button>
-      <button onClick={() => setIsRegisterOpen((prev) => !prev)}>회원가입</button>
-      {isRegisterOpen && <Register setIsRegisterOpen={setIsRegisterOpen} />}
+      <button onClick={() => handleSignIn(user, closeModal)}>로그인</button>
     </Container>
   );
 };
 
 const Container = styled.div`
-  position: relative;
-
   width: 100%;
   height: 100%;
   background: purple;

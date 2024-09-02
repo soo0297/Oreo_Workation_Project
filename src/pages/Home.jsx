@@ -1,13 +1,14 @@
-import useModal from '../components/custom/useModal';
 import { useEffect, useState } from 'react';
 import supabase from '../components/Supabase';
 import styled from 'styled-components';
 import Category from '../components/Category';
 import FeedSection from '../components/FeedSection';
-import Modal from '../components/common/Modal';
 import FeedForm from '../components/FeedForm';
 import Following from '../components/Following';
-import useAuthStorage from '../components/custom/useAuthStorage';
+import useAuth from '../components/custom/useAuth';
+import ModalContent from '../components/common/ModalContent';
+import useModal from '../components/custom/useModal';
+import { userContext } from '../components/context/User';
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);
@@ -15,7 +16,8 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const { isModalOpen, toggleModal } = useModal();
+  const { isTypeModalOpen, openTypeModal, closeModal } = useModal();
+  const { isSignedIn } = userContext();
 
   const ITEM_PER_PAGE = 5;
 
@@ -70,13 +72,9 @@ const Home = () => {
         </Category>
         <FeedSection feeds={feeds} setPage={setPage} loading={loading} hasMore={hasMore} category={category} />
         <Following />
+        {isSignedIn && <Write_Btn onClick={() => openTypeModal('form')}>작성</Write_Btn>}
       </Container>
-      {isModalOpen && (
-        <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
-          {/* 보여줄 컴포넌트 자리 */}
-          <FeedForm setFeeds={setFeeds} toggleModal={toggleModal} />
-        </Modal>
-      )}
+      {isTypeModalOpen && <ModalContent type={isTypeModalOpen} closeModal={closeModal} />}
     </>
   );
 };
@@ -92,6 +90,17 @@ const Container = styled.div`
   position: relative;
   column-gap: 60px;
   padding: 8px 16px;
+`;
+
+const Write_Btn = styled.button`
+  width: 50px;
+  height: 50px;
+  border-radius: 25%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  z-index: 1;
 `;
 
 export default Home;
