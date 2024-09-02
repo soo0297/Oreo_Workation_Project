@@ -4,7 +4,7 @@ import Preview from './Preview';
 import React, { useEffect, useRef, useState } from 'react';
 import Modal from './common/Modal';
 
-const FeedSection = ({ feeds, setPage, loading, hasMore }) => {
+const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
   const { isModalOpen, toggleModal } = useModal();
   const [selectedFeed, setSelectedFeed] = useState();
 
@@ -35,6 +35,10 @@ const FeedSection = ({ feeds, setPage, loading, hasMore }) => {
   return (
     <>
       <FeedSection_Wrapper>
+        <Category_Wrapper>
+          <CategoryView>지역: {category.RegionId}</CategoryView>
+          <CategoryView>태그: {category.TagId}</CategoryView>
+        </Category_Wrapper>
         {feeds.map((feed) => {
           return (
             <Feed key={feed.id}>
@@ -49,11 +53,13 @@ const FeedSection = ({ feeds, setPage, loading, hasMore }) => {
                 }}
               >
                 <h3>{feed.title}</h3>
+                <hr />
                 <Category_Wrapper>
-                  <div>{feed.category_region}</div>
-                  <div>{feed.category_tag}</div>
+                  {feed.category_region ? <CategoryView>{feed.category_region}</CategoryView> : ''}
+                  {feed.category_tag ? <CategoryView>{feed.category_tag}</CategoryView> : ''}
                 </Category_Wrapper>
                 <img src={feed.img_url} />
+                <p>{feed.content}</p>
                 <p>{feed.date}</p>
               </Content_Container>
             </Feed>
@@ -73,12 +79,25 @@ const FeedSection = ({ feeds, setPage, loading, hasMore }) => {
   );
 };
 
+const CategoryView = styled.div`
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+  background-color: #ddd;
+`;
+
 const Feed = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
   padding-bottom: 16px;
   border-bottom: 1px solid #aaa;
+  padding: 10px;
+  background-color: #b9ebff;
+  border-radius: 20px;
+  gap: 5px;
 `;
 
 const FeedSection_Wrapper = styled.div`
@@ -89,6 +108,7 @@ const FeedSection_Wrapper = styled.div`
 const User_Container = styled.div`
   display: flex;
   align-items: center;
+  padding: 10px;
   img {
     width: 40px;
     height: 40px;
@@ -99,6 +119,10 @@ const User_Container = styled.div`
 const Content_Container = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: #eee;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
 `;
 
 const Category_Wrapper = styled.div`
@@ -106,5 +130,6 @@ const Category_Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  margin: 8px;
 `;
 export default React.memo(FeedSection);
