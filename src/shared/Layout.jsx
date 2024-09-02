@@ -4,15 +4,21 @@ import Navibar from '../components/Navibar';
 
 const Layout = () => {
   return (
-    <div>
+    <Container>
       <Navibar />
       <main>
         <Outlet />
       </main>
       <Footer></Footer>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+`;
 
 const Footer = styled.footer``;
 

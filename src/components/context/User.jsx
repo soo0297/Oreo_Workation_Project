@@ -31,9 +31,9 @@ const userReducer = (state, action) => {
   }
 };
 
-export const userContext = () => {
+export function userContext() {
   return useContext(UserContext);
-};
+}
 
 export const userDispatchContext = () => {
   return useContext(UserDispatchContext);
