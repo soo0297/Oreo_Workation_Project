@@ -16,9 +16,6 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const { isModalOpen, toggleModal } = useModal();
-  const { getSignInFlag } = useAuthStorage();
-
-  const signInFlag = getSignInFlag();
 
   const ITEM_PER_PAGE = 5;
 
@@ -73,7 +70,6 @@ const Home = () => {
         </Category>
         <FeedSection feeds={feeds} setPage={setPage} loading={loading} hasMore={hasMore} category={category} />
         <Following />
-        <Write_Btn onClick={toggleModal}>작성</Write_Btn>
       </Container>
       {isModalOpen && (
         <Modal $isOpen={isModalOpen} toggleModal={toggleModal} $width="40%" $height="80%">
@@ -96,15 +92,6 @@ const Container = styled.div`
   position: relative;
   column-gap: 60px;
   padding: 8px 16px;
-`;
-
-const Write_Btn = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 25%;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
 `;
 
 export default Home;

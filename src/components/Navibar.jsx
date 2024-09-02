@@ -40,6 +40,7 @@ const Navibar = () => {
           <Login toggleModal={toggleModal} handleSignIn={handleSignIn}></Login>
         </Modal>
       )}
+      {signInFlag && <Write_Btn onClick={toggleModal}>작성</Write_Btn>}
     </NavigationBar>
   );
 };
@@ -85,6 +86,17 @@ const Image_Wrapper = styled.div`
 
     object-fit: cover;
   }
+`;
+
+const Write_Btn = styled.button`
+  width: 50px;
+  height: 50px;
+  border-radius: 25%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  z-index: 1;
 `;
 
 export default Navibar;
