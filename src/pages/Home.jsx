@@ -8,6 +8,7 @@ import Modal from '../components/common/Modal';
 import FeedForm from '../components/FeedForm';
 import Following from '../components/Following';
 import useAuthStorage from '../components/custom/useAuthStorage';
+import Carousel from '../components/Carousel';
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);
@@ -64,6 +65,7 @@ const Home = () => {
   }, [page]);
   return (
     <>
+      <Carousel />
       <Container>
         <Category category={category} setCategory={setCategory}>
           카테고리
