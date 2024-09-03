@@ -1,19 +1,15 @@
 import styled from 'styled-components';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import MyFeed from './common/MyFeed';
 
 const MyFeedSection = ({ feeds, updateFeed, deleteFeed }) => {
-  console.log('feed: ', feeds);
-  const [selectedFeedId, setSelectedFeedId] = useState('');
   const [isEditedFormOpen, toggleEditedFotm] = useState(false);
+  const selectedFeedId = useRef(null);
 
-  const handleClickFeed = useCallback(
-    (feedId) => {
-      setSelectedFeedId(feedId);
-      toggleEditedFotm((prev) => !prev);
-    },
-    [isEditedFormOpen]
-  );
+  const handleClickFeed = (feedId) => {
+    selectedFeedId.current = feedId;
+    toggleEditedFotm((prev) => !prev);
+  };
 
   return (
     <Container>
@@ -21,7 +17,7 @@ const MyFeedSection = ({ feeds, updateFeed, deleteFeed }) => {
         <MyFeed
           key={feed.id}
           feed={feed}
-          selectedFeedId={selectedFeedId}
+          selectedFeedId={selectedFeedId.current}
           isEditedFormOpen={isEditedFormOpen}
           handleClickFeed={handleClickFeed}
           updateFeed={updateFeed}
