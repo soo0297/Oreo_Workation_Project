@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import MyFeed from './common/MyFeed';
 
 const MyFeedSection = ({ feeds, updateFeed, deleteFeed }) => {
-  console.log('feed: ', feeds);
   const [selectedFeedId, setSelectedFeedId] = useState('');
   const [isEditedFormOpen, toggleEditedFotm] = useState(false);
 
@@ -33,15 +32,14 @@ const MyFeedSection = ({ feeds, updateFeed, deleteFeed }) => {
 };
 
 const Container = styled.div`
-  background: wheat;
   width: 100%;
-  height: 800px;
+  height: auto;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  gap: 20px;
+  gap: 40px;
 `;
 
 export default React.memo(MyFeedSection);
