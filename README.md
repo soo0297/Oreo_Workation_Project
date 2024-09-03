@@ -1,4 +1,4 @@
-# Oreo_Workation_Project
+# Oreo_Workation_Project
 
 ### [ 워케이션을 즐기는 사람들의 장소 공유 커뮤니티 ](https://www.notion.so/teamsparta/5-5-e8dede345edd4fe3940e63dd6a7074c8)
 
