@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Carousel from './Carousel';
 
 const Preview = ({ feed }) => {
+  console.log(feed);
   return !feed ? (
     ''
   ) : (

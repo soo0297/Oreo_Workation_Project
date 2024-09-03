@@ -3,7 +3,7 @@ import supabase from './Supabase';
 import { userContext } from './context/User';
 
 const FeedForm = ({ closeModal }) => {
-  const { user } = userContext();
+  const user = userContext();
   console.log(user);
 
   let formData = {
@@ -63,6 +63,8 @@ const FeedForm = ({ closeModal }) => {
       img_url: photoUrl,
       category_region,
       category_tag,
+      author_name: user.nickname,
+      author_profile_url: user.profileUrl,
       date: `${new Date().toISOString().slice(0, 10)}` + ` ${new Date().toTimeString().slice(0, 8)}`
     });
 
