@@ -3,7 +3,6 @@ import supabase from '../components/Supabase';
 import styled from 'styled-components';
 import Category from '../components/Category';
 import FeedSection from '../components/FeedSection';
-import Following from '../components/Following';
 import ModalContent from '../components/common/ModalContent';
 import useModal from '../components/custom/useModal';
 import { userContext } from '../components/context/User';
@@ -11,7 +10,6 @@ import writeIcon from '../img/sign-up-icon.png';
 import intro_bg from '../img/intro_bg.png';
 
 const Home = () => {
-  console.log('home');
   const [feeds, setFeeds] = useState([]);
   const [category, setCategory] = useState({ RegionId: 'All', TagId: 'All' });
   const [page, setPage] = useState(1);
@@ -49,7 +47,6 @@ const Home = () => {
       } else {
         setFeeds((prev) => [...prev, ...data]);
       }
-      console.log('data => ', feeds);
       setHasMore(data.length > 0);
     }
 

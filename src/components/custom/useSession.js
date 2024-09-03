@@ -10,7 +10,6 @@ const useSession = () => {
       const { data } = await supabase.auth.getSession();
       if (data.session) {
         const { user } = data.session;
-        console.log('session: ', user);
         await readUser(user.id);
       }
     };

@@ -24,7 +24,6 @@ const useDatabase = () => {
   const readUser = async (userId) => {
     try {
       const { data, error } = await supabase.from('user').select().eq('user_id', userId).single();
-      console.log('readUser: ', data);
 
       const { user_id, nickname, profile_url } = data;
 

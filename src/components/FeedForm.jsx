@@ -3,9 +3,8 @@ import supabase from './Supabase';
 import { userContext } from './context/User';
 import styled from 'styled-components';
 
-const FeedForm = ({ closeModal }) => {
+const FeedForm = ({ closeModal, insertFeed }) => {
   const user = userContext();
-  console.log(user);
 
   let formData = {
     author_id: '',
@@ -19,7 +18,6 @@ const FeedForm = ({ closeModal }) => {
     category_region: '',
     category_tag: ''
   };
-  console.log(formData);
 
   const [submitted, setSubmitted] = useState(false);
 
