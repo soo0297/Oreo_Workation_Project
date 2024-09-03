@@ -14,7 +14,7 @@ const ModalContent = ({ type, closeModal, handleSignIn, handleSignUp, selectedFe
       );
     case 'register':
       return (
-        <Modal closeModal={closeModal} $width="25%" $height="40%">
+        <Modal closeModal={closeModal} $width="25%" $height="48%">
           <Register closeModal={closeModal} handleSignUp={handleSignUp}></Register>
         </Modal>
       );

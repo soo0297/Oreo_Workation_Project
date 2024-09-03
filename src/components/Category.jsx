@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import category_img from '../img/category.jpg';
 
 const Category = ({ category, setCategory }) => {
   const [showRegion, setShowRegion] = useState(true);
@@ -168,7 +167,7 @@ const Category_Button = styled.button`
   background-color: white;
   border-radius: 10px;
   &:hover {
-    background-color: #ddd;
+    background-color: #bfd9d4;
     font-weight: 600;
   }
 `;
