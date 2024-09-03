@@ -68,9 +68,9 @@ const Home = () => {
     <>
       <IntroBg>
         <StTitle>
-          <div>Work away from work</div>
-          <div>Work + Vacation</div>
-          <TitleBtn>Explore</TitleBtn>
+          <TitleSpan>Work + Vacation</TitleSpan>
+          <div>{'워케이션(Workation)'}</div>
+          <TitleSpan>일상에서 벗어나 일과 휴식을 동시에!</TitleSpan>
         </StTitle>
       </IntroBg>
       <Container>
@@ -90,20 +90,9 @@ const Home = () => {
   );
 };
 
-const TitleBtn = styled.button`
-  width: 200px;
-  height: 50px;
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 20px;
-  &:hover {
-    background-color: rgb(0, 0, 0, 0.5);
-  }
+const TitleSpan = styled.span`
+  font-size: 27px;
 `;
-
 const StTitle = styled.div`
   font-size: 60px;
   font-weight: 600;
@@ -116,6 +105,7 @@ const StTitle = styled.div`
 `;
 
 const IntroBg = styled.div`
+  margin-top: 90px;
   width: 100%;
   height: 800px;
   background-image: url(${intro_bg});

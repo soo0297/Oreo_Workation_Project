@@ -48,7 +48,7 @@ const NavigationBar = styled.nav`
   position: fixed;
   top: 0;
 
-  background: transparent;
+  background: white;
   width: 100%;
   height: 80px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -61,7 +61,7 @@ const NavigationBar = styled.nav`
 `;
 
 const Wrapper = styled.div`
-  width: 80%;
+  width: 93%;
   height: 100%;
 
   display: flex;

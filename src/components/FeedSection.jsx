@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import ModalContent from './common/ModalContent';
 import Carousel from './Carousel';
 
-const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
+const FeedSection = ({ feeds, setPage, loading, hasMore }) => {
   const { isTypeModalOpen, openTypeModal, closeModal } = useModal();
   const [selectedFeed, setSelectedFeed] = useState(null);
 
@@ -43,10 +43,6 @@ const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
   return (
     <>
       <FeedSection_Wrapper>
-        <Category_Wrapper>
-          <CategoryView>지역: {category.RegionId}</CategoryView>
-          <CategoryView>태그: {category.TagId}</CategoryView>
-        </Category_Wrapper>
         {feeds.map((feed) => {
           return (
             <Feed key={feed.id}>

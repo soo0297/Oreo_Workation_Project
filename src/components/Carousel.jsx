@@ -49,6 +49,9 @@ const CarouselTrack = styled.div`
 const CarouselSlide = styled.div`
   min-width: 100%;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CarouselImage = styled.img`
@@ -57,7 +60,7 @@ const CarouselImage = styled.img`
 `;
 
 const PrevBtn = styled.button`
-  left: 10px;
+  left: 3px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -69,7 +72,7 @@ const PrevBtn = styled.button`
   z-index: 1;
 `;
 const NextBtn = styled.button`
-  right: 10px;
+  right: 3px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
