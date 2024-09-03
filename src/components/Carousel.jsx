@@ -18,7 +18,7 @@ const Carousel = ({ images }) => {
   return (
     <Carousel_wrapper>
       <PrevBtn onClick={prevSlide}>◀</PrevBtn>
-      <CarouselTrack currentIndex={currentIndex}>
+      <CarouselTrack currentindex={currentIndex}>
         {images.map((img, index) => {
           return (
             <CarouselSlide key={index}>
@@ -43,7 +43,7 @@ const Carousel_wrapper = styled.div`
 const CarouselTrack = styled.div`
   display: flex;
   transition: transform 0.5s;
-  transform: ${({ currentIndex }) => `translateX(-${currentIndex * 100}%)`};
+  transform: ${({ currentindex }) => `translateX(-${currentindex * 100}%)`};
 `;
 
 const CarouselSlide = styled.div`

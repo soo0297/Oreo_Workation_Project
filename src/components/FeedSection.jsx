@@ -59,14 +59,13 @@ const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
                   handleFeedClick(feed);
                 }}
               >
-                <h3>{feed.title}</h3>
-                <hr />
+                <StTitle>{feed.title}</StTitle>
                 <Category_Wrapper>
                   {feed.category_region ? <CategoryView>{feed.category_region}</CategoryView> : ''}
                   {feed.category_tag ? <CategoryView>{feed.category_tag}</CategoryView> : ''}
                 </Category_Wrapper>
                 <Carousel images={JSON.parse(feed.img_url)} />
-                <p>{feed.content}</p>
+                <Content_text>{feed.content}</Content_text>
                 <p>{feed.date}</p>
               </Content_Container>
             </Feed>
@@ -80,6 +79,16 @@ const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
     </>
   );
 };
+
+const StTitle = styled.h3`
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+const Content_text = styled.div`
+  white-space: pre-line;
+  font-size: 15px;
+`;
 
 const CategoryView = styled.div`
   padding: 5px;
