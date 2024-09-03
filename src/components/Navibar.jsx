@@ -45,7 +45,7 @@ const Navibar = () => {
 };
 
 const NavigationBar = styled.nav`
-  position: sticky;
+  position: fixed;
   top: 0;
 
   background: white;
@@ -56,7 +56,7 @@ const NavigationBar = styled.nav`
   justify-content: center;
   align-items: center;
 
-  z-index: 1;
+  z-index: 2;
 `;
 
 const Wrapper = styled.div`
