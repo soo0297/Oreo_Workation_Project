@@ -7,7 +7,6 @@ const Preview = ({ feed }) => {
     ''
   ) : (
     <FeedWrapper>
-      {/* <button>좋아요</button> */}
       <ProfileContainer>
         <ProfileImage src={feed.author_profile_url} alt={feed.author_profile_url} />
         <h4>{feed.author_name}</h4>
@@ -20,7 +19,7 @@ const Preview = ({ feed }) => {
         <hr style={{ height: '90%' }} />
         <ContentContainer>
           <Content>
-            <h2>{feed.title}</h2>
+            <Title>{feed.title}</Title>
             <p>{feed.content}</p>
           </Content>
         </ContentContainer>
@@ -40,6 +39,7 @@ const Container = styled.div`
   gap: 30px;
   flex: 1;
   align-items: center;
+  /* max-height: 410px; */
 `;
 const ProfileContainer = styled.div`
   display: flex;
@@ -56,16 +56,17 @@ const ImgContainer = styled.div`
   flex: 1;
 `;
 
-// const FeedImage = styled.img`
-//   display: inline-block;
-//   max-width: 100%;
-//   height: auto;
-// `;
 const ContentContainer = styled.div`
   flex: 1;
 `;
 
 const Content = styled.div`
   flex: 4;
+`;
+
+const Title = styled.h2`
+  font-weight: 700;
+  font-size: x-large;
+  margin-bottom: 20px;
 `;
 export default Preview;
