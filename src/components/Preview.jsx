@@ -39,7 +39,7 @@ const Container = styled.div`
   gap: 30px;
   flex: 1;
   align-items: center;
-  /* max-height: 410px; */
+  max-height: 410px;
 `;
 const ProfileContainer = styled.div`
   display: flex;
@@ -62,6 +62,7 @@ const ContentContainer = styled.div`
 
 const Content = styled.div`
   flex: 4;
+  line-height: 1.7;
 `;
 
 const Title = styled.h2`
