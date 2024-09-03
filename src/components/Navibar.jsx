@@ -63,7 +63,7 @@ const NavigationBar = styled.nav`
 `;
 
 const Wrapper = styled.div`
-  width: 80%;
+  width: 93%;
   height: 100%;
 
   display: flex;

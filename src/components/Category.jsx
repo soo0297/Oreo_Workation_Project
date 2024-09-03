@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import category_img from '../img/category.jpg';
 
 const Category = ({ category, setCategory }) => {
   const [showRegion, setShowRegion] = useState(true);
@@ -17,6 +18,10 @@ const Category = ({ category, setCategory }) => {
   };
   return (
     <CategoryArea>
+      <ViewCategory>
+        <StCategory>지역: {category.RegionId}</StCategory>
+        <StCategory>태그: {category.TagId}</StCategory>
+      </ViewCategory>
       <Category_wrapper>
         <StCheckbox checked={showRegion}>
           <input
@@ -94,20 +99,39 @@ const Category = ({ category, setCategory }) => {
   );
 };
 
+const StCategory = styled.div`
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+  /* background-color: #ddd; */
+  border: 1px solid #bbb;
+  border-radius: 5px;
+`;
+
+const ViewCategory = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin: 8px;
+`;
+
 const CategoryArea = styled.div`
-  height: 600px;
-  /* border: 1px black solid; */
+  height: 640px;
   border-radius: 20px;
   padding: 10px;
   position: sticky;
   top: 90px;
-  background-color: rgb(124, 255, 211);
+  background-color: white;
 `;
 
 const Category_wrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 5px;
+  margin-top: 18px;
 `;
 
 const StCheckbox = styled.label`
@@ -141,9 +165,11 @@ const Category_Button = styled.button`
   padding: 8px;
   cursor: pointer;
   text-align: left;
+  background-color: white;
   border-radius: 10px;
   &:hover {
     background-color: #ddd;
+    font-weight: 600;
   }
 `;
 export default Category;

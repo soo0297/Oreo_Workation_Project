@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import supabase from './Supabase';
 import { userContext } from './context/User';
+import styled from 'styled-components';
 
 const FeedForm = ({ closeModal }) => {
   const user = userContext();
@@ -78,10 +79,10 @@ const FeedForm = ({ closeModal }) => {
   return (
     <div>
       {!submitted ? (
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="title">제목</label>
-            <input
+        <Form onSubmit={handleSubmit}>
+          <Container>
+            <Label htmlFor="title">제목</Label>
+            <Input
               type="text"
               id="title"
               name="title"
@@ -89,65 +90,66 @@ const FeedForm = ({ closeModal }) => {
                 formData.title = e.target.value;
               }}
             />
-          </div>
+          </Container>
 
-          <div>
-            <label htmlFor="category_region">카테고리</label>
-            <select
-              id="category_region"
-              name="category_region"
-              onChange={(e) => {
-                formData.category_region = e.target.value;
-              }}
-            >
-              <option value="">지역 선택하기</option>
-              {regions.map((region) => {
-                return (
-                  <option key={region} value={region}>
-                    {region}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
+          <SelectContainer>
+            <Container>
+              <Label htmlFor="title">선택</Label>
+              <Select
+                id="category_region"
+                name="category_region"
+                onChange={(e) => {
+                  formData.category_region = e.target.value;
+                }}
+              >
+                <option value="">지역</option>
+                {regions.map((region) => {
+                  return (
+                    <option key={region} value={region}>
+                      {region}
+                    </option>
+                  );
+                })}
+              </Select>
+            </Container>
 
-          <div>
-            <label htmlFor="category_tag">태그</label>
-            <select
-              id="category_tag"
-              name="category_tag"
-              onChange={(e) => {
-                formData.category_tag = e.target.value;
-              }}
-            >
-              <option value="">장소 선택하기</option>
-              {tags.map((tag) => {
-                return (
-                  <option key={tag} value={tag}>
-                    {tag}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
+            <Container>
+              <Select
+                id="category_tag"
+                name="category_tag"
+                onChange={(e) => {
+                  formData.category_tag = e.target.value;
+                }}
+              >
+                <option value="">장소</option>
+                {tags.map((tag) => {
+                  return (
+                    <option key={tag} value={tag}>
+                      {tag}
+                    </option>
+                  );
+                })}
+              </Select>
+            </Container>
+          </SelectContainer>
 
-          <div>
-            <label htmlFor="content">내용</label>
-            <textarea
+          <Container>
+            <Label htmlFor="content">내용</Label>
+            <TextArea
               id="content"
               name="content"
               onChange={(e) => {
                 formData.content = e.target.value;
               }}
             />
-          </div>
+          </Container>
 
-          <div>
-            <input type="file" accept="image/*" multiple onChange={handleImageChange} />
-          </div>
+          <Container>
+            <Input type="file" accept="image/*" multiple onChange={handleImageChange} />
+          </Container>
 
-          <button type="submit">업로드하기</button>
-        </form>
+          <UploadButton type="submit">업로드하기</UploadButton>
+        </Form>
       ) : (
         <div>
           <h2>업로드가 성공적으로 되었습니다!</h2>
@@ -159,5 +161,48 @@ const FeedForm = ({ closeModal }) => {
     </div>
   );
 };
+
+// const FormWrapper = styled.div``;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  gap: 5px;
+`;
+
+const SelectContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+const Select = styled.select`
+  width: 85px;
+`;
+
+const Label = styled.div`
+  font-weight: 600;
+`;
+const Input = styled.input`
+  width: 300px;
+`;
+const TextArea = styled.textarea`
+  resize: none;
+  width: 300px;
+  height: 100px;
+`;
+
+const UploadButton = styled.button`
+  height: 30px;
+  background-color: #1c75bc;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  &:hover {
+    box-shadow: 5px 5px 5px gray;
+  }
+`;
 
 export default FeedForm;

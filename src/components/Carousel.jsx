@@ -18,7 +18,7 @@ const Carousel = ({ images }) => {
   return (
     <Carousel_wrapper>
       <PrevBtn onClick={prevSlide}>◀</PrevBtn>
-      <CarouselTrack currentIndex={currentIndex}>
+      <CarouselTrack currentindex={currentIndex}>
         {images.map((img, index) => {
           return (
             <CarouselSlide key={index}>
@@ -43,12 +43,15 @@ const Carousel_wrapper = styled.div`
 const CarouselTrack = styled.div`
   display: flex;
   transition: transform 0.5s;
-  transform: ${({ currentIndex }) => `translateX(-${currentIndex * 100}%)`};
+  transform: ${({ currentindex }) => `translateX(-${currentindex * 100}%)`};
 `;
 
 const CarouselSlide = styled.div`
   min-width: 100%;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CarouselImage = styled.img`
@@ -57,7 +60,7 @@ const CarouselImage = styled.img`
 `;
 
 const PrevBtn = styled.button`
-  left: 10px;
+  left: 3px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -69,7 +72,7 @@ const PrevBtn = styled.button`
   z-index: 1;
 `;
 const NextBtn = styled.button`
-  right: 10px;
+  right: 3px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);

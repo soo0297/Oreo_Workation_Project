@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import ModalContent from './common/ModalContent';
 import Carousel from './Carousel';
 
-const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
+const FeedSection = ({ feeds, setPage, loading, hasMore }) => {
   const { isTypeModalOpen, openTypeModal, closeModal } = useModal();
   const [selectedFeed, setSelectedFeed] = useState(null);
 
@@ -43,10 +43,6 @@ const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
   return (
     <>
       <FeedSection_Wrapper>
-        <Category_Wrapper>
-          <CategoryView>지역: {category.RegionId}</CategoryView>
-          <CategoryView>태그: {category.TagId}</CategoryView>
-        </Category_Wrapper>
         {feeds.map((feed) => {
           return (
             <Feed key={feed.id}>
@@ -59,14 +55,13 @@ const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
                   handleFeedClick(feed);
                 }}
               >
-                <h3>{feed.title}</h3>
-                <hr />
                 <Category_Wrapper>
                   {feed.category_region ? <CategoryView>{feed.category_region}</CategoryView> : ''}
                   {feed.category_tag ? <CategoryView>{feed.category_tag}</CategoryView> : ''}
                 </Category_Wrapper>
                 <Carousel images={JSON.parse(feed.img_url)} />
-                <p>{feed.content}</p>
+                <StTitle>{feed.title}</StTitle>
+                <Content_text>{feed.content}</Content_text>
                 <p>{feed.date}</p>
               </Content_Container>
             </Feed>
@@ -80,6 +75,18 @@ const FeedSection = ({ feeds, setPage, loading, hasMore, category }) => {
     </>
   );
 };
+
+const StTitle = styled.h3`
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+`;
+
+const Content_text = styled.div`
+  white-space: pre-line;
+  font-size: 17px;
+  line-height: 1.7;
+`;
 
 const CategoryView = styled.div`
   padding: 5px;

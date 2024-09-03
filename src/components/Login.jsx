@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import oreo from '../assets/oreo.png';
+
 // import Register from './Register';
 // import { useState } from 'react';
 
@@ -11,29 +13,68 @@ const Login = ({ closeModal, handleSignIn }) => {
 
   return (
     <Container>
-      <input type="text" onChange={(e) => (user.email = e.target.value)} />
-      <input type="password" onChange={(e) => (user.password = e.target.value)} />
-      <button onClick={() => handleSignIn(user, closeModal)}>로그인</button>
+      <Logo>
+        <img src={oreo} />
+      </Logo>
+      <Login_Label>Email</Login_Label>
+      <input type="text" onChange={(e) => (user.email = e.target.value)} placeholder="아이디" />
+      <Login_Label>Password</Login_Label>
+      <input type="password" onChange={(e) => (user.password = e.target.value)} placeholder="비밀번호" />
+      <button onClick={() => handleSignIn(user, closeModal)}>Sign in</button>
     </Container>
   );
 };
 
+const Logo = styled.div`
+  height: 30px;
+  width: 30px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    height: 80px;
+    width: 200px;
+  }
+`;
+
+const Login_Label = styled.div`
+  width: 80%;
+  text-align: left;
+  margin-top: 30px;
+`;
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: purple;
+  /* background: purple; */
 
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  text-align: center;
 
   input {
     width: 80%;
     height: 30px;
-
-    border: none;
+    margin-top: 5px;
+    border: 1px solid #bbb;
     border-radius: 10px;
+  }
+
+  button {
+    margin-top: 40px;
+    width: 200px;
+    height: 33px;
+    border-radius: 8px;
+    border: none;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    &:hover {
+      background-color: #222;
+    }
   }
 `;
 
