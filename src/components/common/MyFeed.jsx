@@ -26,14 +26,25 @@ const MyFeed = ({ feed, selectedFeedId, isEditedFormOpen, handleClickFeed, updat
       </Wrapper>
       {isEditedFormOpen && selectedFeedId === feed.id && (
         <EditedForm>
-          <input type="text" onClick={(e) => e.stopPropagation()} onChange={(e) => (newFeed.title = e.target.value)} />
-          <input
-            type="text"
-            onClick={(e) => e.stopPropagation()}
-            onChange={(e) => (newFeed.content = e.target.value)}
-          />
-          <button onClick={() => updateFeedFromDatabase(newFeed, () => updateFeed(newFeed))}>수정하기</button>
-          <button onClick={() => deleteFeedFromDatabase(newFeed, () => deleteFeed(newFeed))}>삭제하기</button>
+          <EditedFormWrapper>
+            <input
+              type="text"
+              placeholder={feed.title}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => (newFeed.title = e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder={feed.content}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => (newFeed.content = e.target.value)}
+            />
+
+            <EditedFormBtnWrapper>
+              <button onClick={() => updateFeedFromDatabase(newFeed, () => updateFeed(newFeed))}>수정하기</button>
+              <button onClick={() => deleteFeedFromDatabase(newFeed, () => deleteFeed(newFeed))}>삭제하기</button>
+            </EditedFormBtnWrapper>
+          </EditedFormWrapper>
         </EditedForm>
       )}
     </RootWrapper>
@@ -41,29 +52,34 @@ const MyFeed = ({ feed, selectedFeedId, isEditedFormOpen, handleClickFeed, updat
 };
 
 const RootWrapper = styled.div`
-  background: red;
   width: 100%;
   height: auto;
+
+  padding: 15px 10px 40px 10px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  gap: 20px;
+
+  border-bottom: solid 2px gray;
+
+  cursor: pointer;
 `;
 
 const Wrapper = styled.div`
-  padding: 10px;
-
   width: 100%;
   height: 150px;
 
   display: flex;
   justify-content: space-between;
 
-  border: 1px solid black;
+  border: none;
+  border-radius: 20px;
 `;
 
 const LeftContainer = styled.div`
-  background: red;
   width: 70%;
 `;
 
@@ -72,7 +88,17 @@ const LeftItem = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
+
+  :nth-child(1) {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  :last-child {
+    font-size: 14px;
+    color: gray;
+  }
 `;
 
 const RightContainer = styled.div`
@@ -88,20 +114,63 @@ const RightContainer = styled.div`
     height: 100%;
 
     object-fit: fill;
+
+    border-radius: 20px;
   }
 `;
 
 const EditedForm = styled.div`
-  background: green;
   width: 100%;
   height: 150px;
 
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 
   gap: 10px;
+
+  border: solid 2px #b9ebff;
+
+  cursor: default;
+`;
+
+const EditedFormWrapper = styled.div`
+  width: 90%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  input {
+    width: 100%;
+  }
+`;
+
+const EditedFormBtnWrapper = styled.div`
+  width: auto;
+  height: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+
+  button {
+    padding: 10px 15px;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+  }
+
+  :nth-child(1) {
+    background: #b9ebff;
+    color: black;
+  }
 `;
 
 export default MyFeed;
