@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import { userContext } from './context/User';
 import ModalContent from './common/ModalContent';
 import oreo from '../assets/oreo.png';
+import useSession from './custom/useSession';
 
 const Navibar = () => {
+  useSession();
   const { isSignedIn, profileUrl } = userContext();
   const { handleSignIn, handleSignUp } = useAuth();
   const { isTypeModalOpen, openTypeModal, closeModal } = useModal();

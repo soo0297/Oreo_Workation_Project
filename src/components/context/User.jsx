@@ -1,17 +1,19 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
+import useAuth from '../custom/useAuth';
 
 const UserContext = createContext(null);
 const UserDispatchContext = createContext(null);
 
 const initialState = {
   isSignedIn: false,
-  userId: '',
+  userId: null,
   nickname: '',
   profileUrl: ''
 };
 
 const UserProvider = ({ children }) => {
   const [user, dispatch] = useReducer(userReducer, initialState);
+
   return (
     <UserContext.Provider value={user}>
       <UserDispatchContext.Provider value={dispatch}>{children}</UserDispatchContext.Provider>
