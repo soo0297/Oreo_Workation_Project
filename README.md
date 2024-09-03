@@ -34,7 +34,11 @@
 
 ## 프로젝트 계기
 
-개발자들이 재택근무 형태가 많은데, 일과 휴가를 동시에 즐기는 근무형태로 '워케이션(Workation)'이 트렌드라는 것을 알게 되었습니다. 이를 즐기는 사람들이 어떤 장소에서 일하기 좋았는지 공유할 수 있으면 좋을 것 같아 만들게 되었습니다.
+1. 디지털 기술의 발전으로 인해 업무 환경의 영향을 덜 받기 때문에 '디지털 노마드' 문화가 생겨남.
+2. 코로나 확산으로 인해 원격근무가 늘고, 탄력적인 업무 형태의 필요성이 생김.
+3. 사회구성원들이 일과 삶의 균형을 중시하기 시작함.
+
+> 위처럼 사회가 변화하면서 일과 휴가를 동시에 즐기는 근무형태로 '워케이션(Workation)'이 트렌드라는 것을 알게 되었습니다. 이를 즐기는 사람들이 어떤 장소에서 일하기 좋았는지 공유할 수 있으면 좋을 것 같아 만들게 되었습니다.
 
 ## 💜 주요기능
 
@@ -58,6 +62,10 @@
 
 #### 4. 무한스크롤 기능
 
+- intersectionObserver API 로 구현
+- 피드섹션 최하단 observe 구역 감지 시 다음 페이지를 렌더링한다.
+- 피드의 끝까지 스크롤하여 다음 페이지로 넘길 수 있다.
+
 #### 5. memo, useMemo, useCallback 을 이용한 렌더링 최적화 적용
 
 ## ⏲️ 개발기간
@@ -68,27 +76,29 @@
 
 ### ✔️ Language
 
-Javascript
+![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)
 
 ### ✔️ Version Control(버전관리)
 
 Git을 이용한 분산버전관리(DVCS)
 
+![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+
 ### ✔️ IDE(통합개발환경)
 
-Visual Studio
+![Visual Studio Code](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
 
 ### ✔️ Framework
 
-React, Vite
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB), `Vite`
 
 ### ✔️ Deploy
 
-Vercel
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 ### ✔️ DBMS
 
-Supabase
+![Supabase](https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=white)
 
 ## 와이어프레임
 
