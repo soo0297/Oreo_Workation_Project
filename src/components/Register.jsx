@@ -16,8 +16,11 @@ const Register = ({ closeModal }) => {
       <Logo>
         <img src={oreo} />
       </Logo>
+      <Input_Label>Email</Input_Label>
       <input type="text" onChange={(e) => (user.email = e.target.value)} placeholder="아이디" />
+      <Input_Label>Password</Input_Label>
       <input type="password" onChange={(e) => (user.password = e.target.value)} placeholder="비밀번호" />
+      <Input_Label>Nickname</Input_Label>
       <input type="text" onChange={(e) => (user.nickname = e.target.value)} placeholder="닉네임" />
       <button onClick={() => handleSignUp(user, closeModal)}>Sign up</button>
       {/* <button onClick={}>로그인하러 가기</button> */}
@@ -38,6 +41,12 @@ const Logo = styled.div`
   }
 `;
 
+const Input_Label = styled.div`
+  width: 80%;
+  text-align: left;
+  margin-top: 30px;
+`;
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -45,7 +54,7 @@ const Container = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 
   input {

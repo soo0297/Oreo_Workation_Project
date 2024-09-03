@@ -55,6 +55,7 @@ const CarouselSlide = styled.div`
 `;
 
 const CarouselImage = styled.img`
+  max-height: 450px;
   width: 100%;
   display: block;
 `;

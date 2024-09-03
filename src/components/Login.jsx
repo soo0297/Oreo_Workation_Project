@@ -16,9 +16,9 @@ const Login = ({ closeModal, handleSignIn }) => {
       <Logo>
         <img src={oreo} />
       </Logo>
-      <Login_Label>Email</Login_Label>
+      <Input_Label>Email</Input_Label>
       <input type="text" onChange={(e) => (user.email = e.target.value)} placeholder="아이디" />
-      <Login_Label>Password</Login_Label>
+      <Input_Label>Password</Input_Label>
       <input type="password" onChange={(e) => (user.password = e.target.value)} placeholder="비밀번호" />
       <button onClick={() => handleSignIn(user, closeModal)}>Sign in</button>
     </Container>
@@ -38,7 +38,7 @@ const Logo = styled.div`
   }
 `;
 
-const Login_Label = styled.div`
+const Input_Label = styled.div`
   width: 80%;
   text-align: left;
   margin-top: 30px;
