@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import category_img from '../img/category.jpg';
 
 const Category = ({ category, setCategory }) => {
   const [showRegion, setShowRegion] = useState(true);
@@ -101,7 +102,8 @@ const CategoryArea = styled.div`
   padding: 10px;
   position: sticky;
   top: 90px;
-  background-color: rgb(124, 255, 211);
+  /* background-color: rgb(124, 255, 211); */
+  background-image: url(${category_img});
 `;
 
 const Category_wrapper = styled.div`

@@ -48,7 +48,7 @@ const NavigationBar = styled.nav`
   position: fixed;
   top: 0;
 
-  background: white;
+  background: transparent;
   width: 100%;
   height: 80px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
