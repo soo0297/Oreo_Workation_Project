@@ -33,7 +33,6 @@ const MyFeedSection = ({ feeds, updateFeed, deleteFeed }) => {
 };
 
 const Container = styled.div`
-  background: wheat;
   width: 100%;
   height: 800px;
 
