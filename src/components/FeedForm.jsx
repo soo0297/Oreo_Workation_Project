@@ -3,7 +3,7 @@ import supabase from './Supabase';
 import { userContext } from './context/User';
 import styled from 'styled-components';
 
-const FeedForm = ({ closeModal, insertFeed }) => {
+const FeedForm = ({ closeModal }) => {
   const user = userContext();
 
   let formData = {
