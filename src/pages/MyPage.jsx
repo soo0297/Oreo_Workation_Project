@@ -4,7 +4,7 @@ import useDatabase from '../components/custom/useDatabase';
 import styled from 'styled-components';
 import useSession from '../components/custom/useSession';
 import useAuth from '../components/custom/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MyFeedSection from '../components/MyFeedSection';
 import oreo from '../assets/oreo.png';
 
@@ -52,7 +52,7 @@ const MyPage = () => {
     <Wrapper>
       <NavigationBar>
         <div>
-          <img src={oreo} />
+          <img onClick={() => navigate('/')} src={oreo} />
           <button
             onClick={() =>
               handleSignOut(() => {
@@ -103,6 +103,7 @@ const NavigationBar = styled.nav`
     object-fit: cover;
 
     overflow: hidden;
+    cursor: pointer;
   }
 
   div {

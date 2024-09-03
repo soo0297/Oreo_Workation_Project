@@ -11,6 +11,7 @@ import writeIcon from '../img/sign-up-icon.png';
 import intro_bg from '../img/intro_bg.png';
 
 const Home = () => {
+  console.log('home');
   const [feeds, setFeeds] = useState([]);
   const [category, setCategory] = useState({ RegionId: 'All', TagId: 'All' });
   const [page, setPage] = useState(1);
