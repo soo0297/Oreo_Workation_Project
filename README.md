@@ -71,28 +71,45 @@
 
 ### ✔️ Language
 
-React
+Javascript
 
-### ✔️ Version Control
+### ✔️ Version Control(버전관리)
 
-### ✔️ IDE
+Git을 이용한 분산버전관리(DVCS)
+
+### ✔️ IDE(통합개발환경)
+
+Visual Studio
 
 ### ✔️ Framework
 
+React, Vite
+
 ### ✔️ Deploy
 
+Vercel
+
 ### ✔️ DBMS
+
+Supabase
 
 ## 서비스 구조
 
 ## 와이어프레임
 
 <a href="https://ibb.co/0hd4vWJ"><img src="https://i.ibb.co/hDtQwn8/Oreo-s.png" alt="Oreo-s" border="0" /></a>
-
-## API 명세서
-
-## ERD
+![와이어프레임](https://i.ibb.co/hDtQwn8/Oreo-s.png)
 
 ## 프로젝트 파일 구조
+
+<details>
+<summary>펼쳐보기</summary>
+<div markdown="1">
+
+![파일트리](https://ibb.co/1qRcKqX)
+
+ <br>
+</div>
+</details>
 
 ## Trouble Shooting
