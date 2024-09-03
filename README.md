@@ -5,17 +5,14 @@
 ## 📖 목차
 
 1. [프로젝트 소개](#프로젝트-소개)
-2. [팀소개](#팀소개)
+2. [팀소개](#Oreo-소개)
 3. [프로젝트 계기](#프로젝트-계기)
 4. [주요기능](#주요기능)
 5. [개발기간](#개발기간)
 6. [기술스택](#기술스택)
-7. [서비스 구조](#서비스-구조)
-8. [와이어프레임](#와이어프레임)
-9. [API 명세서](#API-명세서)
-10. [ERD](#ERD)
-11. [프로젝트 파일 구조](#프로젝트-파일-구조)
-12. [Trouble Shooting](#trouble-shooting)
+7. [와이어프레임](#와이어프레임)
+8. [프로젝트 파일 구조](#프로젝트-파일-구조)
+9. [Trouble Shooting](#trouble-shooting)
 
 ## 👨‍🏫 프로젝트 소개
 
@@ -93,12 +90,9 @@ Vercel
 
 Supabase
 
-## 서비스 구조
-
 ## 와이어프레임
 
-<a href="https://ibb.co/0hd4vWJ"><img src="https://i.ibb.co/hDtQwn8/Oreo-s.png" alt="Oreo-s" border="0" /></a>
-![와이어프레임](https://i.ibb.co/hDtQwn8/Oreo-s.png)
+![와이어프레임](https://github.com/user-attachments/assets/f989def1-5086-4d39-ab3f-a9190b23a6f8)
 
 ## 프로젝트 파일 구조
 
@@ -106,7 +100,7 @@ Supabase
 <summary>펼쳐보기</summary>
 <div markdown="1">
 
-![파일트리](https://ibb.co/1qRcKqX)
+![파일트리](https://github.com/user-attachments/assets/2d121c9e-699f-4c1b-896a-7aed6a247718)
 
  <br>
 </div>
