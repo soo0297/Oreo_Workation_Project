@@ -121,9 +121,7 @@ const FeedForm = ({ closeModal }) => {
                   formData.category_tag = e.target.value;
                 }}
               >
-                <option styled={{ width: '85px' }} value="">
-                  장소
-                </option>
+                <option value="">장소</option>
                 {tags.map((tag) => {
                   return (
                     <option key={tag} value={tag}>
