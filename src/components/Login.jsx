@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 import oreo from '../assets/oreo.png';
 
-// import Register from './Register';
-// import { useState } from 'react';
-
 const Login = ({ closeModal, handleSignIn }) => {
-  console.log('login');
   let user = {
     email: '',
     password: ''
