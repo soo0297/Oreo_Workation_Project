@@ -26,6 +26,7 @@
 | :-----------------------------------------: | :---------------------------------------------------: | :---------------------------------------------: |
 |                   O. 팀장                   |                       Re. 팀원                        |                     O. 팀원                     |
 |                    ENTJ                     |                         INFJ                          |                      ISTP                       |
+|        로그인, 회원가입, 마이페이지         |              디테일페이지, 피드 작성 폼               |                   메인페이지                    |
 |   [@BY.log](https://velog.io/@quxx/posts)   | [@ssyeong121.log](https://velog.io/@ssyeong121/posts) | [@coding_Story](https://record165.tistory.com/) |
 | [Byoung-yup](https://github.com/Byoung-yup) |         [soo0297](https://github.com/soo0297)         |    [seokwon27](https://github.com/seokwon27)    |
 
@@ -45,29 +46,73 @@
 
 #### 1. Supabase를 활용한 CRUD
 
+<details>
+<summary>펼쳐보기</summary>
+<div markdown="1">
+
+![피드작성](https://github.com/user-attachments/assets/6bda9113-9cd5-4438-9385-9024e29e314c)
+![피드 수정,삭제](https://github.com/user-attachments/assets/4f30a29d-fb56-4926-ba11-776d276b3c0b)
+
+ <br>
+</div>
+</details>
+
 - **Create** : 로그인한 유저는 메인페이지 오른쪽 아래에 나타나는 '작성' 버튼을 클릭하여 게시물을 작성할 수 있다.
-- **Read** : 작성 후 '업로드하기' 버튼을 클릭하면 메인페이지에 피드에 보여진다.
+- **Read** : 작성 후 '업로드하기' 버튼을 클릭하면 메인페이지에 피드에 보여지고, 로그인한 유저가 작성한 게시물만 마이페이지에서 확인할 수 있다.
 - **Update** : 마이페이지에서 로그인한 유저의 게시물을 클릭하면 제목과 내용, (이미지)를 수정할 수 있다.
 - **Delete** : 마이페이지에서 로그인한 유저의 게시물을 클릭하면 게시물을 삭제할 수 있는 버튼이 있다.
 
 #### 2. Supabase를 활용한 로그인, 회원 가입
 
-- **Login** : '로그인' 버튼을 통해 로그인을 할 수 있으며 계정 정보를 전역 상태로 관리한다.
-- **Register** : '회원가입' 버튼을 통해 가입할 수 있으며 계정 정보가 데이터베이스에 저장된다.
+<details>
+<summary>펼쳐보기</summary>
+<div markdown="1">
 
-#### 3. 마이 페이지에서 내 게시물 보기
+![로그인,회원가입](https://github.com/user-attachments/assets/294f0f0c-fc3f-4996-ba5c-c30802d5bc12)
 
-- **Read** : 사용자 계정에 따라 본인의 게시물을 확인할 수 있다.
-- **Update** : 게시물 버튼을 통해 해당 게시물을 수정할 수 있다.
-- **Delete** : 게시물 버튼을 통해 해당 게시물을 삭제할 수 있다.
+ <br>
+</div>
+</details>
 
-#### 4. 무한스크롤 기능
+- **Login** : 메인페이지 오른쪽 상단에 있는 '로그인' 버튼을 통해 로그인을 할 수 있으며 계정 정보를 전역 상태로 관리한다.
+- **Register** : 메인페이지 오른쪽 상단에 있는 '회원가입' 버튼을 통해 가입할 수 있으며 계정 정보가 데이터베이스에 저장된다.
+
+#### 3. 무한스크롤 기능
 
 - intersectionObserver API 로 구현
 - 피드섹션 최하단 observe 구역 감지 시 다음 페이지를 렌더링한다.
 - 피드의 끝까지 스크롤하여 다음 페이지로 넘길 수 있다.
 
-#### 5. memo, useMemo, useCallback 을 이용한 렌더링 최적화 적용
+#### 4. memo, useMemo, useCallback 을 이용한 렌더링 최적화 적용
+
+#### 5. 캐러셀
+
+<details>
+<summary>펼쳐보기</summary>
+<div markdown="1">
+
+![캐러셀](https://github.com/user-attachments/assets/d673c8e2-e996-45c4-a8f1-74b5cdfccfdb)
+![코드](https://github.com/user-attachments/assets/1b10c496-e212-484f-8634-dd0c02e3f1e3)
+
+ <br>
+</div>
+</details>
+- 캐러셀 라이브러리를 사용하지 않고 직접 코딩했다.
+
+#### 6. 커스텀 훅을 이용한 모달 사용
+
+<details>
+<summary>펼쳐보기</summary>
+<div markdown="1">
+
+![image](https://github.com/user-attachments/assets/427cc048-f68c-41cb-8909-b69df9912926)
+
+ <br>
+</div>
+</details>
+
+- 모달 라이브러리를 사용하지 않고 직접 코딩했다.
+- 쓰이는 곳이 많아 커스텀 훅을 만들어 코드를 재사용할 수 있게 되었다.
 
 ## ⏲️ 개발기간
 
