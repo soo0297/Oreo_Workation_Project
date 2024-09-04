@@ -8,7 +8,12 @@ const Login = ({ closeModal, handleSignIn }) => {
   };
 
   return (
-    <Container>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSignIn(user, closeModal);
+      }}
+    >
       <Logo>
         <img src={oreo} />
       </Logo>
@@ -16,8 +21,8 @@ const Login = ({ closeModal, handleSignIn }) => {
       <input type="text" onChange={(e) => (user.email = e.target.value)} placeholder="아이디" />
       <Input_Label>Password</Input_Label>
       <input type="password" onChange={(e) => (user.password = e.target.value)} placeholder="비밀번호" />
-      <button onClick={() => handleSignIn(user, closeModal)}>Sign in</button>
-    </Container>
+      <button type="submit">Sign in</button>
+    </Form>
   );
 };
 
@@ -40,10 +45,9 @@ const Input_Label = styled.div`
   margin-top: 30px;
 `;
 
-const Container = styled.div`
+const Form = styled.form`
   width: 100%;
   height: 100%;
-  /* background: purple; */
 
   display: flex;
   flex-direction: column;
