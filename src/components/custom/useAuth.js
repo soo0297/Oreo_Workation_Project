@@ -1,42 +1,10 @@
-import { useEffect, useState } from 'react';
 import supabase from '../Supabase';
 import useDatabase from './useDatabase';
 import { userDispatchContext } from '../context/User';
 
 const useAuth = () => {
-  // const [isSignedIn, setSignIn] = useState(false);
   const { createUser, readUser } = useDatabase();
   const dispatch = userDispatchContext();
-
-  // 로그인 상태 확인
-  // useEffect(() => {
-  //   // handleSignOut();
-  //   getSession();
-  // }, []);
-
-  // const getSession = async () => {
-  //   try {
-  //     const { data, error } = await supabase.auth.getSession();
-
-  //     if (error) {
-  //       // 에러 처리
-  //       throw new Error(error.message);
-  //     } else if (data.session) {
-  //       // 성공 처리
-  //       // console.log('data.session: ', data.session);
-  //       const userId = data.session.user.id;
-  //       data.session && userId && (await readUser(userId));
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     alert('세션을 불러오는 도중 오류가 발생하였습니다.', err.message);
-  //   }
-  // };
-
-  // 로그인 상태 변경
-  // const handleAuthToggle = async () => {
-  //   setSignIn((prev) => !prev);
-  // };
 
   // 계정 등록
   const handleSignUp = async ({ email, password, nickname }, onSuccess) => {
@@ -98,8 +66,6 @@ const useAuth = () => {
           onSuccess(); // 델리게이트 실행
         }
       }
-
-      error && alert('로그아웃 오류가 발생하였습니다.', error);
     } catch (err) {
       console.log(err);
       alert('네트워크 오류가 발생하였습니다.', err);
