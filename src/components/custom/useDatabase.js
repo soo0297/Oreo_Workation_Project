@@ -51,7 +51,11 @@ const useDatabase = () => {
   // 내 피드 불러오기
   const readFeeds = async (userId) => {
     try {
-      const { data, error } = await supabase.from('feed').select('*').eq('author_id', userId);
+      const { data, error } = await supabase
+        .from('feed')
+        .select('*')
+        .eq('author_id', userId)
+        .order('id', { ascending: false });
 
       const parsedata = data.map((feed) => {
         return {
