@@ -98,8 +98,6 @@ const useAuth = () => {
           onSuccess(); // 델리게이트 실행
         }
       }
-
-      error && alert('로그아웃 오류가 발생하였습니다.', error);
     } catch (err) {
       console.log(err);
       alert('네트워크 오류가 발생하였습니다.', err);
